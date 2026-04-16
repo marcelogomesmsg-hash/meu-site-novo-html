@@ -1,677 +1,309 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-5GM87C9Z');</script>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Diagnóstico Estratégico | Efficiency On</title>
-<meta name="description" content="Você já investiu em marketing digital e o dinheiro foi embora sem resultado? Descubra exatamente onde o seu sistema está quebrando.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
-<style>
-/* ═══════════════════════════════════════
-   DESIGN SYSTEM
-═══════════════════════════════════════ */
-:root {
-  --blue:     #4285F4;
-  --blue-d:   #1a73e8;
-  --blue-dim: rgba(66,133,244,.1);
-  --blue-glow:rgba(66,133,244,.25);
-  --green:    #34A853;
-  --red:      #EA4335;
-  --yellow:   #FBBC05;
-  --ink:      #202124;
-  --ink2:     #3C4043;
-  --muted:    #5F6368;
-  --border:   #DADCE0;
-  --bg:       #FFFFFF;
-  --bg2:      #F8F9FA;
-  --bg3:      #EEF2FF;
-  --sans:     'Nunito Sans', -apple-system, sans-serif;
-  --ease:     cubic-bezier(.16,1,.3,1);
-}
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-font-smoothing:antialiased;}
-html{scroll-behavior:smooth;}
-body{font-family:var(--sans);background:var(--bg);color:var(--ink);overflow-x:hidden;line-height:1.7;}
-::selection{background:var(--blue);color:#fff;}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnóstico Estratégico | Método Demanda Contínua</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Remix Icons para os ícones modernos -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 
-/* TYPE */
-h1{font-size:clamp(2.6rem,5.5vw,4.4rem);font-weight:800;line-height:1.08;letter-spacing:-.025em;color:var(--ink);}
-h2{font-size:clamp(1.9rem,3.5vw,3rem);font-weight:700;line-height:1.12;letter-spacing:-.015em;color:var(--ink);}
-h3{font-size:clamp(1.2rem,2vw,1.6rem);font-weight:700;color:var(--ink);}
-p{font-size:1rem;color:var(--muted);font-weight:400;line-height:1.8;margin-bottom:1rem;}
-p:last-child{margin-bottom:0;}
-strong{color:var(--ink);font-weight:700;}
-.label{font-size:.7rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--blue);}
-.italic-blue{font-style:italic;color:var(--blue);}
+    <style>
+        :root {
+            --bg-main: #08090A;
+            --bg-sec: #0F1113;
+            --text-main: #FFFFFF;
+            --text-sec: #949494;
+            --accent: #C6A15B;
+            --accent-glow: rgba(198, 161, 91, 0.3);
+            --danger: #8E2424; /* Tom de tensão */
+            --border: rgba(255, 255, 255, 0.06);
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Inter', sans-serif;
+        }
 
-/* LAYOUT */
-.wrap{max-width:1140px;margin:0 auto;padding:0 40px;}
-section{position:relative;}
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
 
-/* BUTTON */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:15px 32px;font-family:var(--sans);font-size:.85rem;font-weight:700;letter-spacing:.02em;text-decoration:none;border-radius:100px;border:none;cursor:pointer;transition:all .25s var(--ease);position:relative;overflow:hidden;}
-.btn::after{content:'';position:absolute;inset:0;background:rgba(255,255,255,.15);opacity:0;transition:opacity .2s;}
-.btn:hover::after{opacity:1;}
-.btn-primary{background:var(--blue);color:#fff;box-shadow:0 2px 8px var(--blue-glow);}
-.btn-primary:hover{background:var(--blue-d);box-shadow:0 6px 20px var(--blue-glow);transform:translateY(-2px);}
-.btn-dark{background:var(--ink);color:#fff;box-shadow:0 2px 8px rgba(0,0,0,.2);}
-.btn-dark:hover{background:#000;box-shadow:0 6px 20px rgba(0,0,0,.3);transform:translateY(-2px);}
-.btn-outline{background:transparent;color:var(--blue);border:2px solid var(--blue);}
-.btn-outline:hover{background:var(--blue-dim);transform:translateY(-2px);}
-.btn-white{background:#fff;color:var(--ink);box-shadow:0 2px 12px rgba(0,0,0,.15);}
-.btn-white:hover{box-shadow:0 6px 24px rgba(0,0,0,.2);transform:translateY(-2px);}
-.btn-lg{padding:20px 48px;font-size:1rem;}
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
 
-/* REVEAL ANIMATIONS */
-.rv{opacity:0;transform:translateY(28px);transition:opacity .8s var(--ease),transform .8s var(--ease);}
-.rv.on{opacity:1;transform:translateY(0);}
-.rv-left{opacity:0;transform:translateX(-28px);transition:opacity .8s var(--ease),transform .8s var(--ease);}
-.rv-left.on{opacity:1;transform:translateX(0);}
-.rv-right{opacity:0;transform:translateX(28px);transition:opacity .8s var(--ease),transform .8s var(--ease);}
-.rv-right.on{opacity:1;transform:translateX(0);}
-.rv-scale{opacity:0;transform:scale(.92);transition:opacity .8s var(--ease),transform .8s var(--ease);}
-.rv-scale.on{opacity:1;transform:scale(1);}
-.d1{transition-delay:.07s}.d2{transition-delay:.14s}.d3{transition-delay:.21s}.d4{transition-delay:.28s}.d5{transition-delay:.35s}.d6{transition-delay:.42s}
+        /* Video Background */
+        .video-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        .video-bg video {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            opacity: 0.3;
+            filter: grayscale(100%) contrast(1.2);
+        }
+        .video-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(8,9,10,0.7), var(--bg-main));
+        }
 
-/* ═══════════════════════════
-   TOPBAR
-═══════════════════════════ */
-.topbar{padding:14px 0;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:200;background:rgba(255,255,255,.92);backdrop-filter:blur(16px);}
-.topbar-inner{display:flex;align-items:center;justify-content:space-between;}
-.brand{font-size:1.1rem;font-weight:800;color:var(--ink);text-decoration:none;letter-spacing:-.01em;}
-.brand span{color:var(--blue);}
+        /* Typography & Tension Elements */
+        h1, h2, h3 { font-family: var(--font-serif); font-weight: 400; letter-spacing: -0.02em; }
+        h1 { font-size: clamp(2.8rem, 6vw, 5rem); line-height: 1; }
+        .highlight { color: var(--accent); font-style: italic; }
+        .tension-text { color: var(--text-main); font-weight: 600; border-bottom: 1px solid var(--danger); }
+        
+        strong { color: var(--text-main); font-weight: 600; }
 
-/* ═══════════════════════════
-   HERO
-═══════════════════════════ */
-.hero{min-height:100vh;display:flex;align-items:center;overflow:hidden;background:var(--bg);padding:100px 0 80px;}
-#heroCanvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;}
-.hero-gradient{position:absolute;inset:0;background:radial-gradient(ellipse 70% 70% at 100% 50%,rgba(66,133,244,.06) 0%,transparent 60%),radial-gradient(ellipse 50% 50% at 0% 100%,rgba(52,168,83,.04) 0%,transparent 50%);pointer-events:none;z-index:1;}
-.hero-inner{position:relative;z-index:2;width:100%;}
-.hero-label{display:flex;align-items:center;gap:10px;margin-bottom:28px;}
-.hero-dot{width:8px;height:8px;border-radius:50%;background:var(--blue);animation:pulse 2s infinite;}
-@keyframes pulse{0%,100%{box-shadow:0 0 0 0 var(--blue-glow)}50%{box-shadow:0 0 0 8px transparent}}
-.hero h1{max-width:880px;}
-.hero h1 .line2{display:block;color:var(--blue);}
-.hero-sub{font-size:1.15rem;max-width:600px;margin:28px 0 48px;color:var(--muted);}
-.hero-meta{margin-top:16px;font-size:.78rem;color:var(--muted);font-weight:600;letter-spacing:.04em;}
-/* chips */
-.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:52px;}
-.chip{padding:6px 16px;border-radius:100px;background:var(--bg2);border:1px solid var(--border);font-size:.75rem;font-weight:600;color:var(--muted);transition:all .2s;}
-.chip:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-dim);}
-.chip-blue{background:var(--blue-dim);border-color:rgba(66,133,244,.3);color:var(--blue);}
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
 
-/* ═══════════════════════════
-   STATS
-═══════════════════════════ */
-.stats-s{background:var(--ink);padding:0;overflow:hidden;}
-.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);}
-.stat-item{padding:52px 48px;border-right:1px solid rgba(255,255,255,.08);position:relative;overflow:hidden;}
-.stat-item:last-child{border-right:none;}
-.stat-item::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--blue);transform:scaleX(0);transform-origin:left;transition:transform .6s var(--ease);}
-.stat-item.on::before{transform:scaleX(1);}
-.stat-num{font-size:clamp(2.2rem,4.5vw,3.8rem);font-weight:800;color:#fff;line-height:1;letter-spacing:-.03em;}
-.stat-num .accent{color:var(--blue);}
-.stat-label{font-size:.85rem;color:rgba(255,255,255,.5);margin-top:8px;margin-bottom:0;font-weight:400;}
+        /* Navigation */
+        nav { padding: 20px 0; border-bottom: 1px solid var(--border); }
+        .logo { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; letter-spacing: 2px; }
 
-/* ═══════════════════════════
-   QUOTE CARD (reusable)
-═══════════════════════════ */
-.qcard{border-radius:16px;padding:40px;position:relative;overflow:hidden;}
-.qcard-blue{background:var(--blue-dim);border:1px solid rgba(66,133,244,.2);}
-.qcard-dark{background:var(--ink);border:1px solid rgba(255,255,255,.08);}
-.qcard-green{background:rgba(52,168,83,.08);border:1px solid rgba(52,168,83,.2);}
-.qcard-red{background:rgba(234,67,53,.06);border:1px solid rgba(234,67,53,.15);}
-.qcard::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
-.qcard-blue::before{background:linear-gradient(to right,var(--blue),var(--green));}
-.qcard-dark::before{background:linear-gradient(to right,var(--blue),var(--green));}
-.qcard-green::before{background:linear-gradient(to right,var(--green),var(--blue));}
-.qcard-red::before{background:linear-gradient(to right,var(--red),var(--yellow));}
-.qcard-icon{font-size:2rem;margin-bottom:16px;display:block;}
-.qcard-quote{font-size:1.25rem;font-weight:700;color:var(--ink);line-height:1.5;}
-.qcard-dark .qcard-quote{color:#fff;}
-.qcard-sub{font-size:.9rem;color:var(--muted);margin-top:10px;margin-bottom:0;}
-.qcard-dark .qcard-sub{color:rgba(255,255,255,.5);}
-.qcard-cite{font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);margin-top:16px;display:block;}
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 18px 36px;
+            background: transparent;
+            color: var(--accent);
+            border: 1px solid var(--accent);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+        .btn:hover {
+            background: var(--accent);
+            color: var(--bg-main);
+            box-shadow: 0 0 20px var(--accent-glow);
+            transform: translateY(-3px);
+        }
 
-/* ═══════════════════════════
-   LEAD
-═══════════════════════════ */
-.lead-s{padding:120px 0;border-bottom:1px solid var(--border);}
-.lead-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:80px;align-items:start;}
-.lead-sticky{position:sticky;top:100px;}
-.lead-body p{font-size:1.05rem;}
-.alert-box{border-radius:12px;padding:20px 24px;display:flex;gap:14px;align-items:flex-start;margin-top:24px;}
-.alert-yellow{background:#FEF7E0;border:1px solid #FDD663;}
-.alert-icon{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
-.alert-box p{font-size:.9rem;color:#594300;margin-bottom:0;font-weight:500;}
+        /* Hero */
+        .hero { padding: 100px 0 80px; position: relative; }
+        .hero .eyebrow { color: var(--danger); text-transform: uppercase; letter-spacing: 4px; font-size: 0.7rem; font-weight: 700; margin-bottom: 20px; display: block; }
+        .hero p { max-width: 600px; font-size: 1.2rem; color: var(--text-sec); margin: 30px 0; }
 
-/* ═══════════════════════════
-   VIRADA (dark)
-═══════════════════════════ */
-.virada-s{padding:120px 0;background:var(--ink);}
-.virada-s .label{color:#8AB4F8;}
-.virada-s h2{color:#fff;}
-.virada-s>p{color:rgba(255,255,255,.6);}
-.virada-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;}
-.factors{margin-top:40px;}
-.factor{display:flex;gap:16px;padding:22px 0;border-bottom:1px solid rgba(255,255,255,.07);transition:border-color .25s;}
-.factor:first-child{border-top:1px solid rgba(255,255,255,.07);}
-.factor:hover{border-bottom-color:var(--blue);}
-.factor-icon{width:44px;height:44px;border-radius:12px;background:rgba(66,133,244,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.1rem;transition:background .25s;}
-.factor:hover .factor-icon{background:rgba(66,133,244,.3);}
-.factor-label{font-size:1rem;color:#fff;font-weight:600;line-height:1.4;}
-.factor-desc{font-size:.85rem;color:rgba(255,255,255,.45);margin-top:3px;margin-bottom:0;}
+        /* Sections */
+        section { padding: 100px 0; border-bottom: 1px solid var(--border); position: relative; }
+        .bg-sec { background: var(--bg-sec); }
 
-/* ═══════════════════════════
-   MECHANISM
-═══════════════════════════ */
-.mec-s{padding:120px 0;border-bottom:1px solid var(--border);}
-.mec-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;}
-.mec-list{display:flex;flex-direction:column;}
-.mec-item{display:flex;gap:16px;padding:22px 0;border-bottom:1px solid var(--border);align-items:flex-start;transition:background .2s;border-radius:0;}
-.mec-item:first-child{border-top:1px solid var(--border);}
-.mec-num{width:32px;height:32px;border-radius:50%;background:var(--blue-dim);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:800;color:var(--blue);flex-shrink:0;margin-top:2px;border:1.5px solid rgba(66,133,244,.3);transition:background .25s,color .25s;}
-.mec-item:hover .mec-num{background:var(--blue);color:#fff;}
-.mec-text{font-size:1rem;color:var(--ink2);font-weight:400;line-height:1.65;margin-bottom:0;}
+        /* Features/Grid */
+        .grid-factors {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        .factor-card {
+            padding: 30px;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border);
+            transition: 0.3s;
+        }
+        .factor-card:hover { border-color: var(--accent); background: rgba(255,255,255,0.04); }
+        .factor-card i { font-size: 2rem; color: var(--accent); margin-bottom: 20px; display: block; }
+        .factor-card h4 { margin-bottom: 10px; font-size: 1.1rem; }
+        .factor-card p { font-size: 0.9rem; color: var(--text-sec); }
 
-/* ═══════════════════════════
-   AUTORIDADE
-═══════════════════════════ */
-.auth-s{padding:120px 0;background:var(--bg2);border-bottom:1px solid var(--border);}
-.auth-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
-.auth-num{font-size:clamp(3.5rem,9vw,8rem);font-weight:800;line-height:1;letter-spacing:-.04em;color:var(--ink);}
-.auth-num span{color:var(--blue);}
-.auth-bar{width:64px;height:4px;background:linear-gradient(to right,var(--blue),var(--green));border-radius:4px;margin:24px 0;}
-.auth-quote{font-size:1.15rem;font-style:italic;color:var(--ink);line-height:1.65;display:block;padding-left:20px;border-left:3px solid var(--blue);margin-bottom:20px;}
+        /* Lists */
+        .check-list { list-style: none; margin: 40px 0; }
+        .check-list li { 
+            display: flex; align-items: flex-start; gap: 15px; 
+            margin-bottom: 20px; font-size: 1.1rem; color: var(--text-sec);
+        }
+        .check-list li i { color: var(--accent); margin-top: 5px; }
+        .check-list b { color: var(--text-main); }
 
-/* ═══════════════════════════
-   BULLETS
-═══════════════════════════ */
-.bullets-s{padding:120px 0;border-bottom:1px solid var(--border);}
-.bullets-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;}
-.bullets-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
-.bullet-item{background:var(--bg);padding:28px 24px;display:flex;gap:14px;align-items:flex-start;transition:background .2s;}
-.bullet-item:hover{background:var(--bg3);}
-.b-check{width:24px;height:24px;border-radius:50%;background:rgba(52,168,83,.12);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:800;color:var(--green);flex-shrink:0;margin-top:1px;border:1.5px solid rgba(52,168,83,.3);}
-.bullet-item p{font-size:.95rem;color:var(--ink2);margin-bottom:0;font-weight:400;line-height:1.55;}
+        /* Big Number Section */
+        .stats { padding: 120px 0; text-align: center; }
+        .big-number { 
+            font-family: var(--font-serif); font-size: clamp(4rem, 12vw, 9rem); 
+            line-height: 1; color: var(--text-main); opacity: 0.9;
+        }
 
-/* ═══════════════════════════
-   QUOTE STRIP
-═══════════════════════════ */
-.quote-strip{padding:80px 0;background:var(--ink);overflow:hidden;}
-.quote-strip-inner{display:flex;gap:24px;animation:stripScroll 30s linear infinite;}
-.qs-item{flex-shrink:0;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:24px 32px;min-width:280px;}
-.qs-item p{font-size:.9rem;color:rgba(255,255,255,.7);margin-bottom:0;font-style:italic;}
-.qs-item span{display:block;font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);margin-top:10px;}
-@keyframes stripScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+        /* Tags */
+        .tag-container { display: flex; flex-wrap: wrap; gap: 12px; margin: 40px 0; }
+        .tag { 
+            padding: 10px 20px; border: 1px solid var(--border); 
+            font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;
+        }
 
-/* ═══════════════════════════
-   FILTRO
-═══════════════════════════ */
-.filtro-s{padding:120px 0;border-bottom:1px solid var(--border);}
-.filtro-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:48px;}
-.f-no{background:var(--bg2);padding:52px;border-radius:16px;border:1px solid var(--border);}
-.f-yes{background:var(--ink);padding:52px;border-radius:16px;position:relative;overflow:hidden;}
-.f-yes::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,var(--blue),var(--green));}
-.ftag{display:inline-flex;align-items:center;gap:6px;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;padding:6px 16px;border-radius:100px;margin-bottom:20px;font-weight:700;}
-.ftag-no{background:#F1F3F4;color:var(--muted);}
-.ftag-yes{background:rgba(66,133,244,.15);color:#8AB4F8;border:1px solid rgba(66,133,244,.2);}
-.f-no h3{color:var(--muted);font-size:1.05rem;margin-bottom:10px;}
-.f-yes h3{color:#fff;font-size:1.05rem;margin-bottom:10px;}
-.f-no p{font-size:.95rem;}
-.f-yes p{color:rgba(255,255,255,.6);font-size:.95rem;}
+        /* Animations */
+        .fade-up { opacity: 0; transform: translateY(30px); transition: 1s cubic-bezier(0.16, 1, 0.3, 1); }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
 
-/* ═══════════════════════════
-   CTA FINAL
-═══════════════════════════ */
-.cta-s{padding:160px 0;position:relative;overflow:hidden;background:linear-gradient(135deg,#1a73e8 0%,#0d47a1 60%,#1b5e20 100%);}
-#ctaCanvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:.12;}
-.cta-inner{position:relative;z-index:2;text-align:center;}
-.cta-inner h2{color:#fff;max-width:720px;margin:16px auto 20px;}
-.cta-inner>p{color:rgba(255,255,255,.8);max-width:540px;margin:0 auto 10px;font-size:1.05rem;}
-.dtags{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:36px 0 52px;}
-.dtag{border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.8);padding:9px 22px;border-radius:100px;font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;transition:background .2s,border-color .2s;}
-.dtag:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.5);}
-.cta-wrap{display:flex;flex-direction:column;align-items:center;gap:14px;}
-.cta-note{font-size:.75rem;color:rgba(255,255,255,.5);font-weight:600;letter-spacing:.04em;}
-.cta-label{color:rgba(255,255,255,.5);font-size:.7rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;margin-bottom:0;}
-
-/* ═══════════════════════════
-   FOOTER
-═══════════════════════════ */
-footer{border-top:1px solid var(--border);padding:36px 0;background:var(--bg);}
-.foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;}
-.foot-brand{font-size:1rem;font-weight:800;color:var(--ink);}
-.foot-copy{font-size:.75rem;color:var(--muted);}
-
-/* ═══════════════════════════
-   RESPONSIVE
-═══════════════════════════ */
-@media(max-width:960px){
-  .lead-grid,.virada-inner,.mec-inner,.auth-inner,.bullets-inner,.filtro-grid{grid-template-columns:1fr;gap:48px;}
-  .lead-sticky{position:static;}
-  .stats-grid{grid-template-columns:1fr;}
-  .stat-item{border-right:none;border-bottom:1px solid rgba(255,255,255,.08);padding:36px 32px;}
-  .stat-item:last-child{border-bottom:none;}
-  .bullets-grid{grid-template-columns:1fr;}
-  .wrap{padding:0 24px;}
-  .f-no,.f-yes{padding:36px 28px;}
-}
-@media(max-width:600px){
-  .hero{padding:80px 0 60px;}
-  .btn-lg{width:100%;justify-content:center;}
-  .lead-s,.virada-s,.mec-s,.auth-s,.bullets-s,.filtro-s,.cta-s,.quote-strip{padding:80px 0;}
-  h1{font-size:2.4rem;}
-  h2{font-size:1.8rem;}
-}
-</style>
+        @media (max-width: 768px) {
+            section { padding: 60px 0; }
+            .grid-factors { grid-template-columns: 1fr; }
+            .btn { width: 100%; justify-content: center; }
+        }
+    </style>
 </head>
 <body>
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5GM87C9Z" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
-<!-- ═══════════════════════════
-     TOPBAR
-═══════════════════════════ -->
-<nav class="topbar">
-  <div class="wrap topbar-inner">
-    <a href="#" class="brand">Efficiency<span>On</span></a>
-    <a href="https://wa.me/5521982955678?text=Vim%20da%20p%C3%A1gina%20de%20diagn%C3%B3stico%20e%20quero%20fazer%20meu%20diagn%C3%B3stico." class="btn btn-primary" style="padding:11px 26px;font-size:.8rem;">Diagnóstico gratuito</a>
-  </div>
-</nav>
-
-<!-- ═══════════════════════════
-     HERO
-═══════════════════════════ -->
-<section class="hero">
-  <canvas id="heroCanvas"></canvas>
-  <div class="hero-gradient"></div>
-  <div class="wrap hero-inner">
-    <div class="hero-label rv">
-      <div class="hero-dot"></div>
-      <span class="label">Diagnóstico Estratégico</span>
-    </div>
-    <h1 class="rv d1">
-      Você já investiu em marketing digital...
-      <span class="line2">e o dinheiro foi embora sem resultado?</span>
-    </h1>
-    <p class="hero-sub rv d2">Isso é mais comum do que parece. E quase sempre existe uma causa clara que ninguém te mostrou ainda.</p>
-    <div class="rv d3">
-      <a href="https://wa.me/5521982955678?text=Vim%20da%20p%C3%A1gina%20de%20diagn%C3%B3stico%20e%20quero%20entender%20o%20que%20travou%20meu%20resultado." class="btn btn-primary btn-lg">
-        → Quero entender o que travou meu resultado
-      </a>
-    </div>
-    <p class="hero-meta rv d4">Diagnóstico gratuito</p>
-    <div class="chips rv d5">
-      <span class="chip chip-blue">Tráfego Pago</span>
-      <span class="chip">Diagnóstico Estratégico</span>
-      <span class="chip">Método Demanda Contínua</span>
-      <span class="chip">Marketing Digital</span>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════
-     STATS
-═══════════════════════════ -->
-<div class="stats-s">
-  <div class="stats-grid">
-    <div class="stat-item rv">
-      <div class="stat-num">R$<span class="accent" data-count="1700000" data-prefix="R$" data-suffix="">1,7M</span></div>
-      <p class="stat-label">investidos em campanhas acompanhadas</p>
-    </div>
-    <div class="stat-item rv d2">
-      <div class="stat-num"><span class="accent">+10</span></div>
-      <p class="stat-label">clientes ativos hoje</p>
-    </div>
-    <div class="stat-item rv d3">
-      <div class="stat-num"><span class="accent">5</span> anos</div>
-      <p class="stat-label">de experiência em tráfego pago</p>
-    </div>
-  </div>
-</div>
-
-<!-- ═══════════════════════════
-     LEAD
-═══════════════════════════ -->
-<section class="lead-s">
-  <div class="wrap">
-    <div class="lead-grid">
-      <div class="lead-sticky rv-left">
-        <div class="label" style="margin-bottom:16px;">A realidade</div>
-        <h2>Vamos ser diretos.</h2>
-        <!-- QUOTE CARD -->
-        <div class="qcard qcard-red rv d3" style="margin-top:36px;">
-          <span class="qcard-icon">⚠️</span>
-          <div class="qcard-quote">75% das empresas não bateram suas metas de marketing</div>
-          <p class="qcard-sub">E apenas 5% consideram suas estratégias eficientes.</p>
-          <span class="qcard-cite">Pesquisa RD Station · Brasil</span>
+    <nav>
+        <div class="container">
+            <div class="logo">D/E</div>
         </div>
-      </div>
-      <div class="rv-right d1">
-        <p style="font-size:1.1rem;">Sim, existem agências ruins no mercado. O setor cresceu rápido. E junto vieram muitos amadores.</p>
-        <p style="font-size:1.1rem;">Gente que sobe anúncio sem estratégia, não acompanha dados e não entende processo de venda.</p>
-        <p style="font-size:1.1rem;"><strong>No final, quem paga a conta é você.</strong></p>
-        <div style="margin-top:36px;">
-          <a href="https://wa.me/5521982955678?text=Vim%20da%20p%C3%A1gina%20de%20diagn%C3%B3stico%20e%20quero%20entender%20o%20que%20deu%20errado." class="btn btn-outline">
-            → Quero entender o que deu errado
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+    </nav>
 
-<!-- ═══════════════════════════
-     VIRADA (dark)
-═══════════════════════════ -->
-<section class="virada-s">
-  <div class="wrap">
-    <div class="virada-inner">
-      <div>
-        <div class="label rv" style="margin-bottom:20px;">O que quase ninguém fala</div>
-        <h2 class="rv d1">Mesmo quando a agência erra, existem outros fatores.</h2>
-        <p class="rv d2" style="color:rgba(255,255,255,.6);margin-top:16px;">Sem isso alinhado, nenhum tráfego no mundo sustenta resultado.</p>
-        <div class="factors">
-          <div class="factor rv d2">
-            <div class="factor-icon">⏱</div>
-            <div><div class="factor-label">Tempo de resposta aos leads</div><p class="factor-desc">Lead frio não converte. O relógio começa no clique.</p></div>
-          </div>
-          <div class="factor rv d3">
-            <div class="factor-icon">🎯</div>
-            <div><div class="factor-label">Clareza da oferta</div><p class="factor-desc">5 segundos para entender. Passou disso, perdeu.</p></div>
-          </div>
-          <div class="factor rv d4">
-            <div class="factor-icon">⚙️</div>
-            <div><div class="factor-label">Processo comercial</div><p class="factor-desc">Tráfego sem funil é encher balde furado.</p></div>
-          </div>
-          <div class="factor rv d5">
-            <div class="factor-icon">📊</div>
-            <div><div class="factor-label">Acompanhamento dos números</div><p class="factor-desc">O que não é medido não pode ser corrigido.</p></div>
-          </div>
+    <!-- HERO -->
+    <header class="hero">
+        <div class="video-bg">
+            <video autoplay muted loop playsinline>
+                <source src="https://assets.mixkit.co/videos/preview/mixkit-abstract-dark-ink-swirls-background-40019-large.mp4" type="video/mp4">
+            </video>
+            <div class="video-overlay"></div>
         </div>
-      </div>
-      <div class="rv-right d2" style="display:flex;flex-direction:column;gap:20px;">
-        <!-- QUOTE CARD -->
-        <div class="qcard qcard-dark">
-          <blockquote class="qcard-quote">"Sem isso alinhado, nenhum tráfego sustenta resultado."</blockquote>
-          <span class="qcard-cite">Efficiency On · Método Demanda Contínua</span>
+        <div class="container fade-up">
+            <span class="eyebrow">Aviso: O amadorismo custa caro.</span>
+            <h1>Você investiu no digital... <br>
+            <span class="highlight">e o lucro desapareceu?</span></h1>
+            <p>Se o seu marketing parece um "ralo de dinheiro", o problema raramente é a ferramenta. O buraco é mais embaixo.</p>
+            <a href="https://wa.me/5521982955678?text=Quero%20um%20diagnóstico%20gratuito%20do%20meu%20marketing" class="btn">
+                Quero entender onde estou perdendo dinheiro <i class="ri-arrow-right-line"></i>
+            </a>
         </div>
-        <!-- INSIGHT CARD -->
-        <div class="qcard qcard-blue" style="background:rgba(66,133,244,.08);border-color:rgba(66,133,244,.2);">
-          <span class="qcard-icon">💡</span>
-          <div class="qcard-quote" style="font-size:1rem;color:var(--ink);">Agência boa + processo ruim = resultado ruim.</div>
-          <p class="qcard-sub">O problema raramente é onde você está olhando.</p>
+    </header>
+
+    <!-- VAMOS SER DIRETOS -->
+    <section>
+        <div class="container">
+            <div class="fade-up">
+                <h3 style="font-size: 2.5rem; max-width: 700px;">Vamos ser diretos: <br> <strong>O mercado está saturado de falsas promessas.</strong></h3>
+                <p style="margin-top: 30px; max-width: 650px;">
+                    Agências que só "sobem anúncio" sem estratégia comercial são a regra, não a exceção. 
+                    No final do mês, você fica com relatórios bonitos de "alcance" e uma <span class="tension-text">conta bancária que não fecha.</span>
+                </p>
+                <a href="https://wa.me/5521982955678?text=Quero%20um%20diagnóstico%20do%20meu%20marketing" class="btn">Solicitar Diagnóstico Real <i class="ri-whatsapp-line"></i></a>
+            </div>
         </div>
-        <a href="https://wa.me/5521982955678?text=Vim%20da%20p%C3%A1gina%20de%20diagn%C3%B3stico%20e%20quero%20fazer%20meu%20diagn%C3%B3stico." class="btn btn-white">
-          → Fazer meu diagnóstico
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<!-- ═══════════════════════════
-     MECANISMO
-═══════════════════════════ -->
-<section class="mec-s">
-  <div class="wrap">
-    <div class="mec-inner">
-      <div>
-        <div class="label rv" style="margin-bottom:16px;">Onde o sistema quebra</div>
-        <h2 class="rv d1">A maioria acha que o problema está no anúncio.</h2>
-        <p class="rv d2" style="margin-top:16px;font-size:1.05rem;">Mas quase nunca está. O problema começa muito antes.</p>
-        <!-- QUOTE CARD -->
-        <div class="qcard qcard-red rv d3" style="margin-top:32px;">
-          <span class="qcard-icon">🚨</span>
-          <div class="qcard-quote" style="font-size:1rem;">O resultado parece "marketing não funciona".</div>
-          <p class="qcard-sub">Mas na prática, o processo inteiro está desalinhado.</p>
+    <!-- OS 4 FATORES -->
+    <section class="bg-sec">
+        <div class="container">
+            <div class="fade-up">
+                <span class="eyebrow" style="color: var(--accent);">Por que não vende?</span>
+                <h2>4 fatores invisíveis que <span class="highlight">matam seu ROI:</span></h2>
+                
+                <div class="grid-factors">
+                    <div class="factor-card">
+                        <i class="ri-timer-flash-line"></i>
+                        <h4>Velocidade de Resposta</h4>
+                        <p>Lead que espera 1 hora para ser atendido já comprou do concorrente.</p>
+                    </div>
+                    <div class="factor-card">
+                        <i class="ri-focus-3-line"></i>
+                        <h4>Clareza da Oferta</h4>
+                        <p>Se o cliente precisa pensar muito para entender o que você vende, ele desiste.</p>
+                    </div>
+                    <div class="factor-card">
+                        <i class="ri-node-tree"></i>
+                        <h4>Processo Comercial</h4>
+                        <p>Tráfego traz o lead. Quem vende é o seu processo (ou a falta dele).</p>
+                    </div>
+                    <div class="factor-card">
+                        <i class="ri-bar-chart-box-line"></i>
+                        <h4>Dados Reais</h4>
+                        <p>Gerenciar marketing sem olhar o custo de aquisição é voar às cegas.</p>
+                    </div>
+                </div>
+
+                <a href="https://wa.me/5521982955678?text=Quero%20alinhar%20meu%20processo%20comercial" class="btn" style="margin-top: 50px;">Minha empresa falha em um desses. Quero ajuda. <i class="ri-arrow-right-up-line"></i></a>
+            </div>
         </div>
-        <div style="margin-top:28px;" class="rv d4">
-          <a href="https://wa.me/5521982955678?text=Vim%20da%20p%C3%A1gina%20de%20diagn%C3%B3stico%20e%20quero%20entender%20onde%20o%20meu%20sistema%20quebra." class="btn btn-primary">
-            → Quero saber onde estou errando
-          </a>
+    </section>
+
+    <!-- O MECANISMO -->
+    <section>
+        <div class="container">
+            <div class="fade-up">
+                <h2 style="max-width: 800px;">O problema não é o anúncio. <br> <strong>É o sistema que sustenta ele.</strong></h2>
+                
+                <ul class="check-list">
+                    <li><i class="ri-close-circle-line"></i> <span><b>Demanda não validada:</b> Você está vendendo o que o mercado quer comprar?</span></li>
+                    <li><i class="ri-close-circle-line"></i> <span><b>Posicionamento Genérico:</b> "Mais do mesmo" não sustenta preço alto.</span></li>
+                    <li><i class="ri-close-circle-line"></i> <span><b>Estrutura Frágil:</b> Seu site ou landing page afasta o cliente qualificado.</span></li>
+                    <li><i class="ri-close-circle-line"></i> <span><b>Leads Frios:</b> Falta de nutrição estratégica antes da tentativa de venda.</span></li>
+                </ul>
+
+                <p style="font-size: 1.4rem; color: var(--accent); font-family: var(--font-serif);">Sem isso alinhado, você só está dando dinheiro para o Mark Zuckerberg.</p>
+                <a href="https://wa.me/5521982955678?text=Quero%20parar%20de%20perder%20dinheiro%20em%20anúncios" class="btn">Quero parar de rasgar dinheiro <i class="ri-shield-cross-line"></i></a>
+            </div>
         </div>
-      </div>
-      <div class="mec-list">
-        <div class="mec-item rv d1"><div class="mec-num">1</div><p class="mec-text">Negócio rodando tráfego sem validar se existe demanda suficiente no mercado</p></div>
-        <div class="mec-item rv d2"><div class="mec-num">2</div><p class="mec-text">Demanda existe, mas a oferta não chama atenção de ninguém</p></div>
-        <div class="mec-item rv d3"><div class="mec-num">3</div><p class="mec-text">Consegue atrair gente, mas não está posicionado para converter</p></div>
-        <div class="mec-item rv d4"><div class="mec-num">4</div><p class="mec-text">Tráfego entra, lead chega, atendimento demora e a janela de decisão fecha</p></div>
-      </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<!-- ═══════════════════════════
-     AUTORIDADE
-═══════════════════════════ -->
-<section class="auth-s">
-  <div class="wrap">
-    <div class="auth-inner">
-      <div class="rv-left">
-        <div class="label" style="margin-bottom:12px;">Track Record</div>
-        <div class="auth-num">R$<span>1,7M</span></div>
-        <div class="auth-bar"></div>
-        <p>Depois de acompanhar mais de R$1,7 milhões investidos em campanhas, um padrão ficou claro:</p>
-      </div>
-      <div class="rv-right d2" style="display:flex;flex-direction:column;gap:20px;">
-        <div class="qcard qcard-blue">
-          <span class="qcard-icon">🏗️</span>
-          <span class="auth-quote" style="font-size:1.15rem;">"Negócios que crescem seguem uma lógica. Não é sorte. Não é tentativa. É estrutura."</span>
+    <!-- STATS -->
+    <section class="stats bg-sec">
+        <div class="container fade-up">
+            <span class="eyebrow">Experiência Real</span>
+            <div class="big-number">R$ 1.7M</div>
+            <p style="font-size: 1.5rem; margin-top: 20px;">Geridos em campanhas de alta performance.</p>
+            <p style="max-width: 700px; margin: 20px auto; color: var(--text-sec);">
+                Não operamos na base da sorte. Existe uma estrutura por trás de todo negócio que escala. 
+                Nós chamamos de <strong>Método Demanda Contínua.</strong>
+            </p>
         </div>
-        <p>É o que chamamos de <strong>Método Demanda Contínua</strong> — um sistema que cobre desde a validação da demanda até a conversão do lead, sem deixar gap no processo.</p>
-        <div>
-          <a href="https://wa.me/5521982955678?text=Vim%20da%20p%C3%A1gina%20e%20quero%20conhecer%20o%20m%C3%A9todo." class="btn btn-dark">
-            → Quero conhecer o método
-          </a>
+    </section>
+
+    <!-- DIAGNOSTICO FINAL -->
+    <section id="cta">
+        <div class="container fade-up">
+            <h2>O que você terá no seu <span class="highlight">Diagnóstico:</span></h2>
+            
+            <div class="tag-container">
+                <div class="tag">Análise de Estratégia</div>
+                <div class="tag">Auditoria de Oferta</div>
+                <div class="tag">Raio-X do Processo Comercial</div>
+                <div class="tag">Identificação de Gargalos</div>
+                <div class="tag">Plano de Escala</div>
+            </div>
+
+            <div style="background: rgba(142, 36, 36, 0.05); padding: 40px; border-left: 4px solid var(--danger); margin-top: 40px;">
+                <p style="color: var(--text-main); font-size: 1.2rem; margin-bottom: 0;">
+                    <strong>Atenção:</strong> Não somos uma fábrica de anúncios. <br>
+                    Se você busca apenas "alguém para postar", não somos para você. <br>
+                    Se você busca <strong>clareza e lucro</strong>, clique abaixo.
+                </p>
+            </div>
+
+            <a href="https://wa.me/5521982955678?text=Quero%20um%20diagnóstico%20gratuito%20do%20meu%20marketing" class="btn" style="background: var(--accent); color: var(--bg-main);">
+                Quero meu Diagnóstico Gratuito <i class="ri-whatsapp-line"></i>
+            </a>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<!-- ═══════════════════════════
-     QUOTE STRIP
-═══════════════════════════ -->
-<div class="quote-strip">
-  <div class="quote-strip-inner">
-    <div class="qs-item"><p>"O problema quase nunca está no anúncio."</p><span>Efficiency On</span></div>
-    <div class="qs-item"><p>"Tráfego sem processo é dinheiro queimado."</p><span>Método Demanda Contínua</span></div>
-    <div class="qs-item"><p>"Lead frio não converte. Nunca."</p><span>Efficiency On</span></div>
-    <div class="qs-item"><p>"Antes de investir mais, entenda onde está o erro."</p><span>Diagnóstico Estratégico</span></div>
-    <div class="qs-item"><p>"Estrutura é o que separa crescimento de aposta."</p><span>Efficiency On</span></div>
-    <div class="qs-item"><p>"75% das empresas não batem suas metas de marketing."</p><span>RD Station · Brasil</span></div>
-    <!-- duplicado para loop infinito -->
-    <div class="qs-item"><p>"O problema quase nunca está no anúncio."</p><span>Efficiency On</span></div>
-    <div class="qs-item"><p>"Tráfego sem processo é dinheiro queimado."</p><span>Método Demanda Contínua</span></div>
-    <div class="qs-item"><p>"Lead frio não converte. Nunca."</p><span>Efficiency On</span></div>
-    <div class="qs-item"><p>"Antes de investir mais, entenda onde está o erro."</p><span>Diagnóstico Estratégico</span></div>
-    <div class="qs-item"><p>"Estrutura é o que separa crescimento de aposta."</p><span>Efficiency On</span></div>
-    <div class="qs-item"><p>"75% das empresas não batem suas metas de marketing."</p><span>RD Station · Brasil</span></div>
-  </div>
-</div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
 
-<!-- ═══════════════════════════
-     BULLETS
-═══════════════════════════ -->
-<section class="bullets-s">
-  <div class="wrap">
-    <div class="bullets-inner">
-      <div class="rv-left">
-        <div class="label" style="margin-bottom:16px;">O que você vai enxergar</div>
-        <h2>No diagnóstico, tudo fica claro.</h2>
-        <p style="margin-top:16px;">Sem achismo. Sem suposição. Com base no que realmente está acontecendo no seu negócio.</p>
-        <div class="qcard qcard-green rv d3" style="margin-top:28px;">
-          <span class="qcard-icon">🔍</span>
-          <div class="qcard-quote" style="font-size:1rem;color:var(--ink);">Clareza é o primeiro passo para resultado.</div>
-          <p class="qcard-sub">Sem saber onde está o problema, qualquer investimento é aposta.</p>
-        </div>
-      </div>
-      <div class="rv-right d2">
-        <div class="bullets-grid">
-          <div class="bullet-item"><div class="b-check">✓</div><p>Se o problema foi execução, estratégia ou estrutura</p></div>
-          <div class="bullet-item"><div class="b-check">✓</div><p>Onde o dinheiro pode ter sido mal investido</p></div>
-          <div class="bullet-item"><div class="b-check">✓</div><p>O que faltou para sua campanha gerar vendas</p></div>
-          <div class="bullet-item"><div class="b-check">✓</div><p>Como deveria funcionar um processo completo</p></div>
-          <div class="bullet-item"><div class="b-check">✓</div><p>Como evitar repetir os mesmos erros</p></div>
-          <div class="bullet-item"><div class="b-check">✓</div><p>Um plano claro do que faz sentido para o seu momento</p></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════
-     FILTRO
-═══════════════════════════ -->
-<section class="filtro-s">
-  <div class="wrap">
-    <div class="label rv" style="margin-bottom:12px;">Posicionamento</div>
-    <h2 class="rv d1" style="max-width:640px;">Isso é para quem quer clareza. Não para quem quer volume.</h2>
-    <div class="filtro-grid rv d2">
-      <div class="f-no">
-        <div class="ftag ftag-no">✕ &nbsp;Não é para você</div>
-        <h3>Você quer alguém para rodar mais anúncios sem entender o problema</h3>
-        <p>Se a ideia é aumentar o volume sem mapear o que está quebrando no processo, isso não vai funcionar aqui.</p>
-      </div>
-      <div class="f-yes">
-        <div class="ftag ftag-yes">✓ &nbsp;É para você</div>
-        <h3>Você quer clareza real sobre o que está travando seu crescimento</h3>
-        <p>Se você está disposto a olhar para os dados com honestidade e entender onde o sistema quebra, é exatamente isso que entregamos.</p>
-        <div style="margin-top:28px;">
-          <a href="https://wa.me/5521982955678?text=Vim%20da%20p%C3%A1gina%20de%20diagn%C3%B3stico%20e%20esse%20sou%20eu." class="btn btn-white">
-            → Esse sou eu
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════
-     CTA FINAL
-═══════════════════════════ -->
-<section class="cta-s">
-  <canvas id="ctaCanvas"></canvas>
-  <div class="wrap">
-    <div class="cta-inner">
-      <div class="label cta-label rv">Próximo passo</div>
-      <h2 class="rv d1">O que você precisa agora não é mais tentativa.</h2>
-      <p class="rv d2">É clareza sobre onde o sistema quebra.</p>
-      <p class="rv d2" style="font-size:.9rem;margin-top:4px;">Antes de investir mais em marketing, faz sentido entender onde está o erro.</p>
-      <div class="dtags rv d3">
-        <span class="dtag">Demanda</span>
-        <span class="dtag">Oferta</span>
-        <span class="dtag">Posicionamento</span>
-        <span class="dtag">Tráfego</span>
-        <span class="dtag">Atendimento</span>
-      </div>
-      <div class="cta-wrap rv d4">
-        <a href="https://wa.me/5521982955678?text=Vim%20da%20p%C3%A1gina%20de%20diagn%C3%B3stico%20e%20quero%20fazer%20meu%20diagn%C3%B3stico%20agora." class="btn btn-white btn-lg">
-          → Fazer meu diagnóstico agora
-        </a>
-        <p class="cta-note">Diagnóstico gratuito</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="wrap">
-    <div class="foot">
-      <div class="foot-brand">EfficiencyOn</div>
-      <p class="foot-copy">© 2025 Efficiency On. Todos os direitos reservados.</p>
-      <p class="foot-copy">Este site não possui vínculo com Facebook ou Google.</p>
-    </div>
-  </div>
-</footer>
-
-<script>
-// ── PARTICLE CANVAS (hero) ──
-(function(){
-  const cv = document.getElementById('heroCanvas');
-  if(!cv) return;
-  const cx = cv.getContext('2d');
-  let W,H,pts=[];
-  function resize(){
-    W=cv.width=cv.offsetWidth;
-    H=cv.height=cv.offsetHeight;
-  }
-  function init(){
-    pts=[];
-    const n=Math.floor(W*H/14000);
-    for(let i=0;i<n;i++){
-      pts.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.4,vy:(Math.random()-.5)*.4,r:Math.random()*2+1});
-    }
-  }
-  function draw(){
-    cx.clearRect(0,0,W,H);
-    // lines
-    for(let i=0;i<pts.length;i++){
-      for(let j=i+1;j<pts.length;j++){
-        const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y;
-        const d=Math.sqrt(dx*dx+dy*dy);
-        if(d<120){
-          cx.beginPath();
-          cx.strokeStyle=`rgba(66,133,244,${.35*(1-d/120)})`;
-          cx.lineWidth=.6;
-          cx.moveTo(pts[i].x,pts[i].y);
-          cx.lineTo(pts[j].x,pts[j].y);
-          cx.stroke();
-        }
-      }
-    }
-    // dots
-    pts.forEach(p=>{
-      cx.beginPath();
-      cx.arc(p.x,p.y,p.r,0,Math.PI*2);
-      cx.fillStyle='rgba(66,133,244,.5)';
-      cx.fill();
-      p.x+=p.vx; p.y+=p.vy;
-      if(p.x<0||p.x>W) p.vx*=-1;
-      if(p.y<0||p.y>H) p.vy*=-1;
-    });
-    requestAnimationFrame(draw);
-  }
-  resize(); init(); draw();
-  window.addEventListener('resize',()=>{resize();init();});
-})();
-
-// ── CTA CANVAS (grid dots) ──
-(function(){
-  const cv = document.getElementById('ctaCanvas');
-  if(!cv) return;
-  const cx = cv.getContext('2d');
-  let W,H;
-  function resize(){W=cv.width=cv.offsetWidth;H=cv.height=cv.offsetHeight;}
-  function draw(){
-    cx.clearRect(0,0,W,H);
-    const spacing=36;
-    const t=Date.now()*.001;
-    for(let x=0;x<W;x+=spacing){
-      for(let y=0;y<H;y+=spacing){
-        const d=Math.sin(x*.02+t)*Math.cos(y*.02+t)*.5+.5;
-        cx.beginPath();
-        cx.arc(x,y,1.2*d+.3,0,Math.PI*2);
-        cx.fillStyle=`rgba(255,255,255,${d*.6})`;
-        cx.fill();
-      }
-    }
-    requestAnimationFrame(draw);
-  }
-  resize(); draw();
-  window.addEventListener('resize',resize);
-})();
-
-// ── SCROLL REVEAL ──
-const io = new IntersectionObserver(es=>{
-  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');}});
-},{threshold:0.08});
-document.querySelectorAll('.rv,.rv-left,.rv-right,.rv-scale,.stat-item').forEach(el=>io.observe(el));
-</script>
+            document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+        });
+    </script>
 </body>
 </html>
