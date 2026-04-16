@@ -18,6 +18,7 @@
   --serif: 'Playfair Display', Georgia, serif;
   --mono: 'IBM Plex Mono', monospace;
   --sans: 'DM Sans', sans-serif;
+  --max: 640px;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -32,6 +33,7 @@ body {
   overflow-x: hidden;
 }
 
+/* grain */
 body::before {
   content: '';
   position: fixed;
@@ -42,6 +44,7 @@ body::before {
   opacity: 0.5;
 }
 
+/* progress */
 .progress-bar {
   position: fixed;
   top: 0; left: 0;
@@ -49,80 +52,34 @@ body::before {
   background: var(--red);
   width: 0%;
   z-index: 999;
+  transition: width 0.1s linear;
 }
 
-/* ── BOTÕES ── */
-.btn {
-  display: block;
-  width: 100%;
-  text-align: center;
-  font-family: var(--mono);
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  text-decoration: none;
-  padding: 20px 24px;
-  border: 2px solid currentColor;
-  cursor: pointer;
-  position: relative;
-  transition: background 0.18s, color 0.18s;
-  -webkit-appearance: none;
+/* ── CONTAINER CENTRAL ── */
+.wrap {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
-.btn-dark {
-  background: var(--ink);
-  color: var(--paper);
-  border-color: var(--ink);
-}
-.btn-dark:hover { background: #2a2522; }
-
-.btn-red {
-  background: var(--red);
-  color: white;
-  border-color: var(--red);
-}
-.btn-red:hover { background: var(--red-dark); border-color: var(--red-dark); }
-
-.btn-outline {
-  background: transparent;
-  color: var(--ink);
-  border-color: var(--ink);
-}
-.btn-outline:hover { background: var(--ink); color: var(--paper); }
-
-.btn-white {
-  background: white;
-  color: var(--red);
-  border-color: white;
-}
-.btn-white:hover { background: transparent; color: white; border-color: white; }
-
-.btn-wrap { padding: 0 20px 0; }
-
-/* ── BLOCOS BASE ── */
-.block {
-  padding: 48px 20px 40px;
+/* ── SEÇÕES BASE ── */
+.section {
+  padding: 52px 0 44px;
 }
 
-.block-dark {
+.section-dark {
   background: var(--ink);
   color: var(--paper);
 }
 
-.block-red {
+.section-red {
   background: var(--red);
   color: white;
 }
 
-.block-mid {
+.section-mid {
   background: #1a1612;
   color: var(--paper);
-}
-
-.block-warn {
-  background: #fdf3e3;
-  border-left: 5px solid var(--amber);
 }
 
 /* ── TIPOGRAFIA ── */
@@ -131,27 +88,26 @@ body::before {
   font-size: 10px;
   letter-spacing: 0.25em;
   text-transform: uppercase;
-  color: var(--amber);
   display: block;
   margin-bottom: 16px;
+  color: var(--dim);
 }
-
-.label-dim { color: var(--dim); }
-.label-white { color: rgba(255,255,255,0.5); }
+.label-amber { color: var(--amber); }
+.label-white { color: rgba(255,255,255,0.45); }
 
 .h1 {
   font-family: var(--serif);
-  font-size: clamp(38px, 9vw, 68px);
+  font-size: clamp(40px, 9vw, 64px);
   font-weight: 900;
   line-height: 1.05;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
 }
 
 .h2 {
   font-family: var(--serif);
-  font-size: clamp(28px, 7vw, 48px);
+  font-size: clamp(30px, 7vw, 50px);
   font-weight: 900;
-  line-height: 1.1;
+  line-height: 1.08;
   letter-spacing: -0.02em;
 }
 
@@ -164,31 +120,65 @@ body::before {
 
 .red-em { color: var(--red); font-style: italic; }
 .amber-em { color: var(--amber); }
-.white-em { color: white; }
 
-.body {
-  font-size: 17px;
-  line-height: 1.75;
-  margin-top: 16px;
-}
-
-.body-lg {
-  font-size: 20px;
-  line-height: 1.65;
-  margin-top: 16px;
-}
-
-.body-dim { color: #c4bdb5; }
+.body { font-size: 17px; line-height: 1.75; margin-top: 14px; }
+.body-dim { color: var(--dim); }
+.body-muted { color: #a09890; }
 .body-white { color: rgba(255,255,255,0.85); }
+
+/* ── BOTÃO ── */
+.btn {
+  display: block;
+  max-width: 480px;
+  margin: 0 auto;
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 20px 32px;
+  border: 2px solid currentColor;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s, border-color 0.18s;
+  -webkit-appearance: none;
+}
+
+.btn-dark { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.btn-dark:hover { background: #2a2522; }
+
+.btn-red { background: var(--red); color: white; border-color: var(--red); }
+.btn-red:hover { background: var(--red-dark); border-color: var(--red-dark); }
+
+.btn-outline { background: transparent; color: var(--ink); border-color: var(--ink); }
+.btn-outline:hover { background: var(--ink); color: var(--paper); }
+
+.btn-white { background: white; color: var(--red); border-color: white; }
+.btn-white:hover { background: transparent; color: white; }
+
+.btn-wrap { padding: 32px 20px; max-width: var(--max); margin: 0 auto; }
+
+/* separador */
+.sep { display: block; height: 3px; background: var(--red); opacity: 0.18; }
 
 /* ── HERO ── */
 .hero {
-  padding: 36px 20px 0;
+  padding: 36px 0 0;
   min-height: 100svh;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-visual {
+  width: 100%;
+  max-width: var(--max);
+  margin: 28px auto 0;
+  display: block;
+  padding: 0 20px;
 }
 
 .hero-sub {
@@ -201,29 +191,26 @@ body::before {
   padding-left: 14px;
 }
 
-.hero-cta {
-  margin-top: 32px;
-  padding-bottom: 40px;
-}
+.hero-cta { margin-top: 28px; padding-bottom: 48px; }
 
 /* ── PROBLEMA CARDS ── */
 .problema-card {
   padding: 32px 20px 28px;
   border-bottom: 1px solid var(--border);
-  position: relative;
-  transition: background 0.3s;
+  max-width: var(--max);
+  margin: 0 auto;
 }
 
 .problema-card:last-of-type { border-bottom: none; }
 
 .problema-num {
   font-family: var(--mono);
-  font-size: 48px;
+  font-size: 42px;
   font-weight: 500;
   color: var(--red);
-  opacity: 0.15;
+  opacity: 0.13;
   line-height: 1;
-  margin-bottom: -8px;
+  margin-bottom: -6px;
 }
 
 .problema-title {
@@ -240,35 +227,28 @@ body::before {
   line-height: 1.65;
 }
 
-/* ── MECANISMO ── cards gritando ── */
-.mecanismo-card {
+/* ── MECANISMO CARDS ── */
+.mec-card {
   padding: 36px 20px 32px;
   border-bottom: 3px solid var(--ink);
-  background: var(--paper);
   position: relative;
   overflow: hidden;
-  transition: background 0.25s, color 0.25s;
 }
 
-.mecanismo-card::before {
+.mec-card::before {
   content: '';
   position: absolute;
   left: 0; top: 0;
-  width: 5px;
-  height: 100%;
+  width: 5px; height: 100%;
   background: var(--red);
 }
 
-.mecanismo-card.alt {
-  background: #1a1612;
-  color: var(--paper);
-}
+.mec-card.alt { background: #1a1612; color: var(--paper); }
+.mec-card.alt::before { background: var(--amber); }
 
-.mecanismo-card.alt::before {
-  background: var(--amber);
-}
+.mec-inner { max-width: var(--max); margin: 0 auto; }
 
-.mecanismo-card .mc-tag {
+.mc-tag {
   font-family: var(--mono);
   font-size: 9px;
   letter-spacing: 0.2em;
@@ -277,12 +257,9 @@ body::before {
   display: block;
   margin-bottom: 12px;
 }
+.mec-card.alt .mc-tag { color: var(--amber); }
 
-.mecanismo-card.alt .mc-tag {
-  color: var(--amber);
-}
-
-.mecanismo-card .mc-head {
+.mc-head {
   font-family: var(--serif);
   font-size: clamp(22px, 5.5vw, 36px);
   font-weight: 900;
@@ -290,15 +267,8 @@ body::before {
   margin-bottom: 10px;
 }
 
-.mecanismo-card .mc-body {
-  font-size: 16px;
-  line-height: 1.7;
-  color: var(--dim);
-}
-
-.mecanismo-card.alt .mc-body {
-  color: #a09890;
-}
+.mc-body { font-size: 16px; line-height: 1.7; color: var(--dim); }
+.mec-card.alt .mc-body { color: #a09890; }
 
 /* ── FILTRO ── */
 .filtro-block {
@@ -306,7 +276,7 @@ body::before {
   border-left: 6px solid var(--red);
   padding: 36px 20px;
 }
-
+.filtro-inner { max-width: var(--max); margin: 0 auto; }
 .filtro-text {
   font-family: var(--serif);
   font-size: clamp(20px, 5vw, 30px);
@@ -318,15 +288,14 @@ body::before {
 /* ── AUTORIDADE ── */
 .big-stat {
   font-family: var(--serif);
-  font-size: clamp(64px, 20vw, 120px);
+  font-size: clamp(72px, 22vw, 130px);
   font-weight: 900;
   line-height: 0.9;
   color: var(--red);
   letter-spacing: -0.04em;
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
-
 .big-stat-label {
   font-family: var(--mono);
   font-size: 11px;
@@ -345,23 +314,9 @@ body::before {
   border-bottom: 1px solid rgba(255,255,255,0.08);
   align-items: flex-start;
 }
-
 .bullet-row:last-child { border-bottom: none; }
-
-.bn {
-  font-family: var(--mono);
-  font-size: 11px;
-  color: var(--amber);
-  padding-top: 4px;
-  flex-shrink: 0;
-  width: 24px;
-}
-
-.bt {
-  font-size: 17px;
-  line-height: 1.6;
-  color: #d4cdc5;
-}
+.bn { font-family: var(--mono); font-size: 11px; color: var(--amber); padding-top: 4px; flex-shrink: 0; width: 24px; }
+.bt { font-size: 17px; line-height: 1.6; color: #d4cdc5; }
 
 /* ── FILTRO FINAL ── */
 .strike-item {
@@ -372,7 +327,6 @@ body::before {
   padding: 10px 0;
   border-bottom: 1px solid var(--border);
 }
-
 .affirm-text {
   font-family: var(--serif);
   font-size: clamp(22px, 5.5vw, 34px);
@@ -382,22 +336,16 @@ body::before {
 }
 
 /* ── QUOTE ── */
-.quote-block {
-  text-align: center;
-  padding: 56px 20px;
-  background: var(--ink);
-}
-
+.quote-block { background: var(--ink); padding: 56px 20px; }
+.quote-inner { max-width: var(--max); margin: 0 auto; text-align: center; }
 .quote-text {
   font-family: var(--serif);
-  font-size: clamp(22px, 5.5vw, 38px);
+  font-size: clamp(22px, 5.5vw, 36px);
   font-style: italic;
-  font-weight: 400;
   color: var(--paper);
   line-height: 1.35;
   margin-bottom: 16px;
 }
-
 .quote-line2 {
   font-family: var(--serif);
   font-size: clamp(18px, 4vw, 26px);
@@ -405,7 +353,7 @@ body::before {
   color: var(--red);
 }
 
-/* ── DIAGNÓSTICO GRID ── */
+/* ── DIAGNÓSTICO ── */
 .diag-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -413,12 +361,10 @@ body::before {
   background: var(--border);
   margin: 24px 0;
 }
-
 .diag-cell {
   background: var(--paper);
   padding: 22px 16px;
 }
-
 .diag-num {
   font-family: var(--mono);
   font-size: 9px;
@@ -427,37 +373,17 @@ body::before {
   display: block;
   margin-bottom: 6px;
 }
-
 .diag-label {
   font-family: var(--serif);
   font-size: clamp(16px, 4vw, 22px);
   font-weight: 700;
   line-height: 1.2;
 }
-
 .diag-cell.full { grid-column: 1 / -1; }
 
-/* ── REVEAL ── */
-.reveal {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-.reveal.visible { opacity: 1; transform: none; }
-
 /* ── FECHAMENTO ── */
-.fechamento {
-  padding: 48px 20px 64px;
-  text-align: center;
-}
-
-.fecha-body {
-  font-size: 17px;
-  color: var(--dim);
-  line-height: 1.7;
-  margin-bottom: 20px;
-}
-
+.fechamento { padding: 48px 20px 64px; text-align: center; }
+.fecha-body { font-size: 17px; color: var(--dim); line-height: 1.7; margin-bottom: 16px; }
 .fecha-final {
   font-family: var(--serif);
   font-size: clamp(20px, 5vw, 28px);
@@ -466,12 +392,69 @@ body::before {
   color: var(--ink);
 }
 
-/* separador */
-.sep {
-  display: block;
-  height: 3px;
+/* ── VISUAL SVG ELEMENTS ── */
+.visual-divider { display: block; width: 100%; max-width: var(--max); margin: 0 auto; }
+
+/* ── REVEAL ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+.reveal.visible { opacity: 1; transform: none; }
+
+/* ── TENSION METER (hero) ── */
+.tension-meter {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 0 20px;
+  max-width: var(--max);
+  margin: 0 auto 0;
+}
+.tm-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+.tm-bar-wrap {
+  flex: 1;
+  height: 6px;
+  background: rgba(14,14,14,0.08);
+  border-radius: 0;
+  overflow: hidden;
+}
+.tm-bar {
+  height: 100%;
   background: var(--red);
-  opacity: 0.2;
+  width: 0;
+  transition: width 1.2s cubic-bezier(0.16,1,0.3,1);
+}
+.tm-val {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--red);
+  width: 28px;
+  text-align: right;
+}
+
+/* ── MONEY BURN visual ── */
+.money-burn-wrap {
+  padding: 0 20px;
+  max-width: var(--max);
+  margin: 0 auto;
+}
+
+/* ── CRACK VISUAL (mecanismo) ── */
+.crack-wrap {
+  padding: 0;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 </style>
@@ -480,35 +463,93 @@ body::before {
 
 <div class="progress-bar" id="progress"></div>
 
-<!-- ══ HERO ══ -->
+<!-- ══════════ HERO ══════════ -->
 <div class="hero">
-  <span class="label label-dim reveal">Efficiency On — Diagnóstico de Pressão</span>
-  <h1 class="h1 reveal">
-    Você já investiu<br>em marketing...<br>
-    <span class="red-em">e o dinheiro foi<br>embora sem resultado?</span>
-  </h1>
-  <p class="hero-sub reveal">
-    Isso é mais comum do que parece. E quase sempre tem uma causa clara que ninguém te mostrou ainda.
-  </p>
-  <div class="hero-cta reveal">
+  <div class="wrap">
+    <span class="label reveal">Efficiency On — Diagnóstico de Pressão</span>
+    <h1 class="h1 reveal">
+      Você já investiu<br>em marketing...<br>
+      <span class="red-em">e o dinheiro foi<br>embora sem resultado?</span>
+    </h1>
+    <p class="hero-sub reveal">
+      Isso é mais comum do que parece. E quase sempre tem uma causa clara que ninguém te mostrou ainda.
+    </p>
+  </div>
+
+  <!-- TENSION METER visual -->
+  <div class="tension-meter reveal" style="margin-top:32px;" id="tension-meter">
+    <div class="tm-row">
+      <span style="width:110px; flex-shrink:0;">Dinheiro investido</span>
+      <div class="tm-bar-wrap"><div class="tm-bar" data-w="92"></div></div>
+      <span class="tm-val">92%</span>
+    </div>
+    <div class="tm-row">
+      <span style="width:110px; flex-shrink:0;">Resultado obtido</span>
+      <div class="tm-bar-wrap"><div class="tm-bar" data-w="11" style="background:#888;"></div></div>
+      <span class="tm-val" style="color:#888;">11%</span>
+    </div>
+    <div class="tm-row">
+      <span style="width:110px; flex-shrink:0;">Causa identificada</span>
+      <div class="tm-bar-wrap"><div class="tm-bar" data-w="0" style="background:var(--amber);"></div></div>
+      <span class="tm-val" style="color:var(--amber);">0%</span>
+    </div>
+  </div>
+
+  <div class="wrap hero-cta reveal">
     <a href="#problema" class="btn btn-dark">→ Quero entender o que travou meu resultado</a>
   </div>
 </div>
 
 <span class="sep"></span>
 
-<!-- ══ LEAD ══ -->
-<div class="block" id="problema">
-  <span class="label label-dim reveal">A verdade que ninguém diz</span>
-  <h2 class="h2 reveal">Existem agências ruins.<br>Você provavelmente<br><span class="red-em">encontrou uma.</span></h2>
-  <p class="body reveal">O setor cresceu rápido. E junto vieram muitos amadores. Gente que sobe anúncio sem estratégia, não acompanha dados e não entende processo de venda.</p>
-  <p class="body reveal" style="font-weight:600; margin-top:12px;">No final, quem paga a conta é você.</p>
+<!-- ══════════ LEAD ══════════ -->
+<div class="section" id="problema">
+  <div class="wrap">
+    <span class="label reveal">A verdade que ninguém diz</span>
+    <h2 class="h2 reveal">Existem agências ruins.<br>Você provavelmente<br><span class="red-em">encontrou uma.</span></h2>
+    <p class="body reveal">O setor cresceu rápido. E junto vieram muitos amadores. Gente que sobe anúncio sem estratégia, não acompanha dados e não entende processo de venda.</p>
+    <p class="body reveal" style="font-weight:600; margin-top:12px;">No final, quem paga a conta é você.</p>
+  </div>
+
+  <!-- MONEY DRAIN visual -->
+  <div class="money-burn-wrap reveal" style="margin-top:32px;">
+    <svg viewBox="0 0 600 120" xmlns="http://www.w3.org/2000/svg" width="100%" style="display:block;">
+      <defs>
+        <linearGradient id="drain" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#c8281a" stop-opacity="0.9"/>
+          <stop offset="70%" stop-color="#c8281a" stop-opacity="0.4"/>
+          <stop offset="100%" stop-color="#c8281a" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <!-- Flow line -->
+      <path d="M 20 60 Q 150 20 300 60 Q 420 90 580 30" stroke="url(#drain)" stroke-width="3" fill="none" stroke-dasharray="6 4"/>
+      <!-- Money symbols draining -->
+      <text x="30" y="55" font-family="IBM Plex Mono" font-size="22" fill="#c8281a" opacity="0.9">R$</text>
+      <text x="110" y="75" font-family="IBM Plex Mono" font-size="18" fill="#c8281a" opacity="0.65">R$</text>
+      <text x="210" y="45" font-family="IBM Plex Mono" font-size="14" fill="#c8281a" opacity="0.45">R$</text>
+      <text x="310" y="78" font-family="IBM Plex Mono" font-size="11" fill="#c8281a" opacity="0.3">R$</text>
+      <text x="400" y="50" font-family="IBM Plex Mono" font-size="8" fill="#c8281a" opacity="0.18">R$</text>
+      <text x="480" y="65" font-family="IBM Plex Mono" font-size="6" fill="#c8281a" opacity="0.09">R$</text>
+      <!-- Arrow tip -->
+      <polygon points="574,22 590,30 574,38" fill="#c8281a" opacity="0.18"/>
+      <!-- Label -->
+      <text x="20" y="108" font-family="IBM Plex Mono" font-size="9" fill="#6b6460" letter-spacing="2">SEU INVESTIMENTO → SEM RETORNO</text>
+    </svg>
+  </div>
+
+  <div class="btn-wrap reveal">
+    <a href="#virada" class="btn btn-dark">→ Ver o que está causando isso</a>
+  </div>
 </div>
 
-<!-- ══ VIRADA — PROBLEMAS em cards ══ -->
-<div class="block-dark block">
-  <span class="label reveal">Mas aqui está o ponto que ninguém fala</span>
-  <h2 class="h3 reveal" style="color:var(--paper);">Mesmo quando a agência erra, outros fatores destroem o resultado.</h2>
+<span class="sep"></span>
+
+<!-- ══════════ VIRADA ══════════ -->
+<div class="section section-dark" id="virada">
+  <div class="wrap">
+    <span class="label label-amber reveal">Mas aqui está o ponto que ninguém fala</span>
+    <h2 class="h2 reveal" style="color:var(--paper);">Mesmo quando a agência erra,<br>outros fatores destroem<br><span style="color:var(--amber); font-style:italic;">o resultado.</span></h2>
+  </div>
 </div>
 
 <div class="problema-card reveal">
@@ -516,188 +557,255 @@ body::before {
   <div class="problema-title">Tempo de resposta<br>ao lead</div>
   <div class="problema-desc">Lead que espera mais de 5 minutos perde o calor. O concorrente que responde rápido fecha a venda que era sua.</div>
 </div>
-
 <div class="problema-card reveal">
   <div class="problema-num">02</div>
   <div class="problema-title">Clareza<br>da oferta</div>
   <div class="problema-desc">Se o cliente não entende em 3 segundos o que você vende e pra quem, ele fecha a página. Simples assim.</div>
 </div>
-
 <div class="problema-card reveal">
   <div class="problema-num">03</div>
   <div class="problema-title">Processo<br>comercial</div>
   <div class="problema-desc">Tráfego sem funil de vendas é desperdício puro. O lead chega, ninguém sabe o que fazer com ele.</div>
 </div>
-
 <div class="problema-card reveal">
   <div class="problema-num">04</div>
   <div class="problema-title">Acompanhamento<br>dos números</div>
   <div class="problema-desc">Sem dados não existe decisão. Você repete o que não funciona sem saber que não funciona.</div>
 </div>
 
-<div class="btn-wrap reveal" style="padding: 28px 20px;">
+<div class="btn-wrap reveal">
   <a href="#mecanismo" class="btn btn-dark">→ Ver onde está o meu erro</a>
 </div>
 
 <span class="sep"></span>
 
-<!-- ══ FILTRO 1 ══ -->
+<!-- ══════════ FILTRO 1 ══════════ -->
 <div class="filtro-block reveal">
-  <p class="filtro-text">Se você acredita que marketing resolve tudo sozinho, isso aqui não vai fazer sentido pra você.</p>
+  <div class="filtro-inner">
+    <p class="filtro-text">Se você acredita que marketing resolve tudo sozinho, isso aqui não vai fazer sentido pra você.</p>
+  </div>
 </div>
 
 <span class="sep"></span>
 
-<!-- ══ MECANISMO — cards gritando ══ -->
-<div class="block" id="mecanismo">
-  <span class="label label-dim reveal">O que está realmente acontecendo</span>
-  <h2 class="h2 reveal">A maioria acha que o problema<br>está no anúncio.<br><span class="red-em">Quase nunca está.</span></h2>
+<!-- ══════════ MECANISMO ══════════ -->
+<div class="section" id="mecanismo">
+  <div class="wrap">
+    <span class="label reveal">O que está realmente acontecendo</span>
+    <h2 class="h2 reveal">A maioria acha que o problema<br>está no anúncio.<br><span class="red-em">Quase nunca está.</span></h2>
+  </div>
 </div>
 
-<div class="mecanismo-card reveal">
-  <span class="mc-tag">Erro 01 — Demanda</span>
-  <div class="mc-head">Tentando rodar tráfego<br>sem demanda suficiente</div>
-  <div class="mc-body">Antes de investir em anúncio, existe demanda real pelo que você vende? Muitos nunca validaram isso.</div>
+<!-- PIPELINE QUEBRADO visual -->
+<div class="wrap reveal" style="padding: 0 20px; margin-bottom: 8px;">
+  <svg viewBox="0 0 600 80" xmlns="http://www.w3.org/2000/svg" width="100%" style="display:block;">
+    <defs>
+      <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+        <path d="M0,0 L0,6 L8,3 z" fill="#c8281a" opacity="0.5"/>
+      </marker>
+    </defs>
+    <!-- Nodes -->
+    <rect x="10" y="28" width="76" height="26" rx="2" fill="none" stroke="#0e0e0e" stroke-width="1.5"/>
+    <text x="48" y="45" font-family="IBM Plex Mono" font-size="8" fill="#0e0e0e" text-anchor="middle" letter-spacing="1">DEMANDA</text>
+
+    <rect x="120" y="28" width="76" height="26" rx="2" fill="none" stroke="#0e0e0e" stroke-width="1.5"/>
+    <text x="158" y="45" font-family="IBM Plex Mono" font-size="8" fill="#0e0e0e" text-anchor="middle" letter-spacing="1">OFERTA</text>
+
+    <rect x="230" y="28" width="76" height="26" rx="2" fill="none" stroke="#0e0e0e" stroke-width="1.5"/>
+    <text x="268" y="45" font-family="IBM Plex Mono" font-size="8" fill="#0e0e0e" text-anchor="middle" letter-spacing="1">POSIÇÃO</text>
+
+    <rect x="340" y="28" width="76" height="26" rx="2" fill="none" stroke="#0e0e0e" stroke-width="1.5"/>
+    <text x="378" y="45" font-family="IBM Plex Mono" font-size="8" fill="#0e0e0e" text-anchor="middle" letter-spacing="1">TRÁFEGO</text>
+
+    <rect x="450" y="28" width="76" height="26" rx="2" fill="none" stroke="#c8281a" stroke-width="2"/>
+    <text x="488" y="45" font-family="IBM Plex Mono" font-size="8" fill="#c8281a" text-anchor="middle" letter-spacing="1">LEAD ✗</text>
+
+    <!-- Arrows -->
+    <line x1="88" y1="41" x2="118" y2="41" stroke="#0e0e0e" stroke-width="1" stroke-dasharray="3 2" marker-end="url(#arr)"/>
+    <!-- QUEBRADO -->
+    <line x1="198" y1="41" x2="219" y2="30" stroke="#c8281a" stroke-width="2"/>
+    <line x1="219" y1="52" x2="228" y2="41" stroke="#c8281a" stroke-width="2"/>
+    <text x="200" y="22" font-family="IBM Plex Mono" font-size="8" fill="#c8281a" letter-spacing="1">QUEBRADO</text>
+
+    <line x1="308" y1="41" x2="338" y2="41" stroke="#0e0e0e" stroke-width="1" stroke-dasharray="3 2" marker-end="url(#arr)"/>
+    <line x1="418" y1="41" x2="448" y2="41" stroke="#0e0e0e" stroke-width="1" stroke-dasharray="3 2" marker-end="url(#arr)"/>
+    <!-- Label bottom -->
+    <text x="10" y="74" font-family="IBM Plex Mono" font-size="8" fill="#6b6460" letter-spacing="1.5">PROCESSO → DESALINHADO EM ALGUM PONTO</text>
+  </svg>
 </div>
 
-<div class="mecanismo-card alt reveal">
-  <span class="mc-tag">Erro 02 — Oferta</span>
-  <div class="mc-head" style="color:var(--paper);">Tem demanda,<br>mas a oferta não chama ninguém</div>
-  <div class="mc-body">O produto existe, o mercado existe. Mas a forma como você apresenta não desperta nenhum desejo.</div>
+<div class="mec-card reveal">
+  <div class="mec-inner">
+    <span class="mc-tag">Erro 01 — Demanda</span>
+    <div class="mc-head">Tentando rodar tráfego<br>sem demanda suficiente</div>
+    <div class="mc-body">Antes de investir em anúncio, existe demanda real pelo que você vende? Muitos nunca validaram isso.</div>
+  </div>
 </div>
 
-<div class="mecanismo-card reveal">
-  <span class="mc-tag">Erro 03 — Posicionamento</span>
-  <div class="mc-head">Atrai pessoas,<br>mas não converte nenhuma</div>
-  <div class="mc-body">O tráfego entra. O lead some. Você não está posicionado pra fechar — parece mais um entre mil.</div>
+<div class="mec-card alt reveal">
+  <div class="mec-inner">
+    <span class="mc-tag">Erro 02 — Oferta</span>
+    <div class="mc-head" style="color:var(--paper);">Tem demanda,<br>mas a oferta não chama ninguém</div>
+    <div class="mc-body">O produto existe, o mercado existe. Mas a forma como você apresenta não desperta nenhum desejo.</div>
+  </div>
 </div>
 
-<div class="mecanismo-card alt reveal">
-  <span class="mc-tag">Erro 04 — Atendimento</span>
-  <div class="mc-head" style="color:var(--paper);">O tráfego entrou.<br>O atendimento demorou.</div>
-  <div class="mc-body">O lead esfria em minutos. Se você demora pra responder, o concorrente que atendeu na hora fechou.</div>
+<div class="mec-card reveal">
+  <div class="mec-inner">
+    <span class="mc-tag">Erro 03 — Posicionamento</span>
+    <div class="mc-head">Atrai pessoas,<br>mas não converte nenhuma</div>
+    <div class="mc-body">O tráfego entra. O lead some. Você não está posicionado pra fechar — parece mais um entre mil.</div>
+  </div>
 </div>
 
-<div class="block-dark block reveal" style="text-align:center; padding:40px 20px;">
-  <p class="body-lg" style="color:rgba(255,255,255,0.9);">O resultado parece que <strong>"marketing não funciona."</strong></p>
-  <p class="body" style="color:#a09890; margin-top:8px;">Na prática, o processo inteiro está desalinhado.</p>
+<div class="mec-card alt reveal">
+  <div class="mec-inner">
+    <span class="mc-tag">Erro 04 — Atendimento</span>
+    <div class="mc-head" style="color:var(--paper);">O tráfego entrou.<br>O atendimento demorou.</div>
+    <div class="mc-body">O lead esfria em minutos. Se você demora pra responder, o concorrente que atendeu na hora fechou.</div>
+  </div>
 </div>
 
-<div class="btn-wrap reveal" style="padding: 28px 20px;">
+<!-- RESULTADO visual -->
+<div class="section-dark" style="padding: 36px 20px; text-align:center;">
+  <div style="max-width:var(--max); margin:0 auto;">
+    <svg viewBox="0 0 480 60" xmlns="http://www.w3.org/2000/svg" width="100%" style="display:block; margin-bottom:16px; max-width:480px; margin-left:auto; margin-right:auto;">
+      <text x="240" y="42" font-family="Playfair Display, Georgia, serif" font-size="38" font-weight="900" font-style="italic" fill="#f4efe5" text-anchor="middle" opacity="0.08" letter-spacing="-1">resultado</text>
+      <text x="240" y="38" font-family="IBM Plex Mono" font-size="11" fill="#c8281a" text-anchor="middle" letter-spacing="4">MARKETING NÃO FUNCIONA</text>
+      <line x1="40" y1="42" x2="440" y2="42" stroke="#c8281a" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.4"/>
+    </svg>
+    <p class="body reveal" style="color:rgba(255,255,255,0.9);">Na prática, o processo inteiro está desalinhado.</p>
+  </div>
+</div>
+
+<div class="btn-wrap reveal">
   <a href="#autoridade" class="btn btn-red">→ Quero entender onde está o meu gap</a>
 </div>
 
 <span class="sep"></span>
 
-<!-- ══ AUTORIDADE ══ -->
-<div class="block" id="autoridade">
-  <span class="label label-dim reveal">Por que acreditar nisso</span>
-  <span class="big-stat reveal">1.7M</span>
-  <span class="big-stat-label reveal">reais em campanhas acompanhadas</span>
-  <p class="body reveal">Depois de acompanhar mais de <strong>R$1.700.000 investidos</strong>, um padrão ficou claro:</p>
-  <p class="body reveal">Negócios que crescem seguem uma lógica. Não é sorte. Não é tentativa. <strong>É estrutura.</strong></p>
-  <p class="body reveal" style="margin-top:12px;">É o que a gente chama de <strong>Método Demanda Contínua</strong> — cinco etapas que cobrem desde a identificação da demanda até a conversão do lead, sem deixar gap no processo.</p>
+<!-- ══════════ AUTORIDADE ══════════ -->
+<div class="section" id="autoridade">
+  <div class="wrap">
+    <span class="label reveal">Por que acreditar nisso</span>
+    <span class="big-stat reveal">1.7M</span>
+    <span class="big-stat-label reveal">reais em campanhas acompanhadas</span>
+    <p class="body reveal">Depois de acompanhar mais de <strong>R$1.700.000 investidos</strong>, um padrão ficou claro:</p>
+    <p class="body reveal">Negócios que crescem seguem uma lógica. Não é sorte. Não é tentativa. <strong>É estrutura.</strong></p>
+    <p class="body reveal" style="margin-top:12px;">É o que a gente chama de <strong>Método Demanda Contínua</strong> — cinco etapas que cobrem desde a identificação da demanda até a conversão do lead, sem deixar gap no processo.</p>
+  </div>
+
+  <!-- MÉTODO visual -->
+  <div class="wrap reveal" style="margin-top:28px;">
+    <svg viewBox="0 0 600 56" xmlns="http://www.w3.org/2000/svg" width="100%" style="display:block;">
+      <defs>
+        <marker id="arr2" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
+          <path d="M0,0 L0,7 L7,3.5 z" fill="#d97706"/>
+        </marker>
+      </defs>
+      <rect x="4" y="14" width="96" height="28" rx="2" fill="#0e0e0e" stroke="#d97706" stroke-width="1.5"/>
+      <text x="52" y="32" font-family="IBM Plex Mono" font-size="7.5" fill="#d97706" text-anchor="middle" letter-spacing="0.5">DEMANDA</text>
+      <line x1="102" y1="28" x2="118" y2="28" stroke="#d97706" stroke-width="1.5" marker-end="url(#arr2)"/>
+
+      <rect x="120" y="14" width="96" height="28" rx="2" fill="#0e0e0e" stroke="#d97706" stroke-width="1.5"/>
+      <text x="168" y="32" font-family="IBM Plex Mono" font-size="7.5" fill="#d97706" text-anchor="middle" letter-spacing="0.5">OFERTA</text>
+      <line x1="218" y1="28" x2="234" y2="28" stroke="#d97706" stroke-width="1.5" marker-end="url(#arr2)"/>
+
+      <rect x="236" y="14" width="96" height="28" rx="2" fill="#0e0e0e" stroke="#d97706" stroke-width="1.5"/>
+      <text x="284" y="32" font-family="IBM Plex Mono" font-size="7.5" fill="#d97706" text-anchor="middle" letter-spacing="0.5">POSIÇÃO</text>
+      <line x1="334" y1="28" x2="350" y2="28" stroke="#d97706" stroke-width="1.5" marker-end="url(#arr2)"/>
+
+      <rect x="352" y="14" width="96" height="28" rx="2" fill="#0e0e0e" stroke="#d97706" stroke-width="1.5"/>
+      <text x="400" y="32" font-family="IBM Plex Mono" font-size="7.5" fill="#d97706" text-anchor="middle" letter-spacing="0.5">TRÁFEGO</text>
+      <line x1="450" y1="28" x2="466" y2="28" stroke="#d97706" stroke-width="1.5" marker-end="url(#arr2)"/>
+
+      <rect x="468" y="14" width="96" height="28" rx="2" fill="#d97706" stroke="#d97706" stroke-width="1.5"/>
+      <text x="516" y="32" font-family="IBM Plex Mono" font-size="7.5" fill="#0e0e0e" text-anchor="middle" letter-spacing="0.5">CONVERSÃO</text>
+      <!-- checkmark -->
+      <text x="548" y="10" font-family="IBM Plex Mono" font-size="10" fill="#d97706">✓</text>
+    </svg>
+  </div>
 </div>
 
 <span class="sep"></span>
 
-<!-- ══ BULLETS ══ -->
-<div class="block-mid block" id="bullets">
-  <span class="label reveal">No diagnóstico você vai enxergar</span>
-  <h2 class="h3 reveal" style="color:var(--paper);">Clareza sobre onde o dinheiro foi.</h2>
-
-  <div class="bullet-row reveal">
-    <span class="bn">01</span>
-    <span class="bt">Se o problema foi execução, estratégia ou estrutura</span>
-  </div>
-  <div class="bullet-row reveal">
-    <span class="bn">02</span>
-    <span class="bt">Onde o dinheiro pode ter sido mal investido</span>
-  </div>
-  <div class="bullet-row reveal">
-    <span class="bn">03</span>
-    <span class="bt">O que faltou pra sua campanha gerar venda</span>
-  </div>
-  <div class="bullet-row reveal">
-    <span class="bn">04</span>
-    <span class="bt">Como deveria funcionar um processo completo</span>
-  </div>
-  <div class="bullet-row reveal">
-    <span class="bn">05</span>
-    <span class="bt">Como evitar cair no mesmo erro novamente</span>
+<!-- ══════════ BULLETS ══════════ -->
+<div class="section section-mid" id="bullets">
+  <div class="wrap">
+    <span class="label label-amber reveal">No diagnóstico você vai enxergar</span>
+    <h2 class="h3 reveal" style="color:var(--paper);">Clareza sobre onde o dinheiro foi.</h2>
+    <div class="bullet-row reveal"><span class="bn">01</span><span class="bt">Se o problema foi execução, estratégia ou estrutura</span></div>
+    <div class="bullet-row reveal"><span class="bn">02</span><span class="bt">Onde o dinheiro pode ter sido mal investido</span></div>
+    <div class="bullet-row reveal"><span class="bn">03</span><span class="bt">O que faltou pra sua campanha gerar venda</span></div>
+    <div class="bullet-row reveal"><span class="bn">04</span><span class="bt">Como deveria funcionar um processo completo</span></div>
+    <div class="bullet-row reveal"><span class="bn">05</span><span class="bt">Como evitar cair no mesmo erro novamente</span></div>
   </div>
 </div>
 
-<div class="btn-wrap reveal" style="padding:28px 20px;">
-  <a href="#diagnostico" class="btn btn-red">→ Quero esse diagnóstico</a>
+<div class="btn-wrap reveal">
+  <a href="#filtro-final" class="btn btn-red">→ Quero esse diagnóstico</a>
 </div>
 
 <span class="sep"></span>
 
-<!-- ══ FILTRO FINAL ══ -->
-<div class="block reveal">
-  <span class="label label-dim">Isso não é pra todo mundo</span>
-  <span class="strike-item">Postar por postar.</span>
-  <span class="strike-item">Rodar anúncio sem entender nada.</span>
-  <span class="strike-item">"Só testar mais um pouco."</span>
-  <p class="affirm-text">Agora, se você quer entender o que realmente está travando seu resultado — continua.</p>
+<!-- ══════════ FILTRO FINAL ══════════ -->
+<div class="section" id="filtro-final">
+  <div class="wrap">
+    <span class="label reveal">Isso não é pra todo mundo</span>
+    <span class="strike-item reveal">Postar por postar.</span>
+    <span class="strike-item reveal">Rodar anúncio sem entender nada.</span>
+    <span class="strike-item reveal">"Só testar mais um pouco."</span>
+    <p class="affirm-text reveal">Agora, se você quer entender o que realmente está travando seu resultado — continua.</p>
+  </div>
 </div>
 
 <span class="sep"></span>
 
-<!-- ══ QUOTE / TRANSIÇÃO ══ -->
+<!-- ══════════ QUOTE ══════════ -->
 <div class="quote-block reveal">
-  <p class="quote-text">"Enquanto você não enxerga onde o problema está,<br>qualquer investimento vira aposta."</p>
-  <p class="quote-line2">E aposta não escala negócio.</p>
+  <div class="quote-inner">
+    <p class="quote-text">"Enquanto você não enxerga onde o problema está,<br>qualquer investimento vira aposta."</p>
+    <p class="quote-line2">E aposta não escala negócio.</p>
+  </div>
 </div>
 
-<!-- ══ DIAGNÓSTICO ══ -->
-<div class="block" id="diagnostico">
-  <span class="label label-dim reveal">O que você precisa mapear agora</span>
-  <h2 class="h2 reveal">Você está perdendo<br>clientes. A pergunta é:<br><span class="red-em">onde?</span></h2>
-  <p class="body reveal">Sem isso mapeado, você só troca de estratégia e continua no mesmo lugar.</p>
+<!-- ══════════ DIAGNÓSTICO ══════════ -->
+<div class="section" id="diagnostico">
+  <div class="wrap">
+    <span class="label reveal">O que você precisa mapear agora</span>
+    <h2 class="h2 reveal">Você está perdendo<br>clientes. A pergunta é:<br><span class="red-em">onde?</span></h2>
+    <p class="body body-dim reveal">Sem isso mapeado, você só troca de estratégia e continua no mesmo lugar.</p>
 
-  <div class="diag-grid reveal">
-    <div class="diag-cell">
-      <span class="diag-num">01</span>
-      <span class="diag-label">Falta de demanda</span>
-    </div>
-    <div class="diag-cell">
-      <span class="diag-num">02</span>
-      <span class="diag-label">Oferta fraca</span>
-    </div>
-    <div class="diag-cell">
-      <span class="diag-num">03</span>
-      <span class="diag-label">Posicionamento errado</span>
-    </div>
-    <div class="diag-cell">
-      <span class="diag-num">04</span>
-      <span class="diag-label">Tráfego mal estruturado</span>
-    </div>
-    <div class="diag-cell full">
-      <span class="diag-num">05</span>
-      <span class="diag-label">Atendimento lento</span>
+    <div class="diag-grid reveal">
+      <div class="diag-cell"><span class="diag-num">01</span><span class="diag-label">Falta de demanda</span></div>
+      <div class="diag-cell"><span class="diag-num">02</span><span class="diag-label">Oferta fraca</span></div>
+      <div class="diag-cell"><span class="diag-num">03</span><span class="diag-label">Posicionamento errado</span></div>
+      <div class="diag-cell"><span class="diag-num">04</span><span class="diag-label">Tráfego mal estruturado</span></div>
+      <div class="diag-cell full"><span class="diag-num">05</span><span class="diag-label">Atendimento lento</span></div>
     </div>
   </div>
 </div>
 
-<!-- ══ CTA FINAL ══ -->
-<div class="block-red block" style="text-align:center;">
-  <span class="label label-white reveal">É exatamente isso que a gente constrói com você</span>
-  <h2 class="h2 reveal" style="color:white;">Um diagnóstico claro.<br>Baseado em dados.<br>Pro seu momento.</h2>
-  <p class="body reveal" style="color:rgba(255,255,255,0.85); margin-bottom:28px;">Antes de investir mais em marketing, faz sentido entender onde está o erro.</p>
-  <div class="reveal">
-    <a href="#" class="btn btn-white">→ Fazer meu diagnóstico agora</a>
+<!-- ══════════ CTA FINAL ══════════ -->
+<div class="section section-red" style="padding:56px 20px; text-align:center;">
+  <div style="max-width:var(--max); margin:0 auto;">
+    <span class="label label-white reveal">É exatamente isso que a gente constrói com você</span>
+    <h2 class="h2 reveal" style="color:white;">Um diagnóstico claro.<br>Baseado em dados.<br>Pro seu momento.</h2>
+    <p class="body reveal" style="color:rgba(255,255,255,0.85); margin-bottom:28px;">Antes de investir mais em marketing, faz sentido entender onde está o erro.</p>
+    <div class="reveal">
+      <a href="#" class="btn btn-white">→ Fazer meu diagnóstico agora</a>
+    </div>
   </div>
 </div>
 
-<!-- ══ FECHAMENTO ══ -->
+<!-- ══════════ FECHAMENTO ══════════ -->
 <div class="fechamento">
   <p class="fecha-body reveal">Porque no final, não é falta de tentativa.</p>
   <p class="fecha-final reveal">É falta de alinhamento.</p>
 </div>
 
 <script>
+// progress bar
 const bar = document.getElementById('progress');
 window.addEventListener('scroll', () => {
   const s = window.scrollY;
@@ -705,8 +813,21 @@ window.addEventListener('scroll', () => {
   bar.style.width = (s / t * 100) + '%';
 });
 
+// scroll reveal
 const obs = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      // animate tension bars when hero meter appears
+      if (e.target.id === 'tension-meter') {
+        setTimeout(() => {
+          e.target.querySelectorAll('.tm-bar').forEach(b => {
+            b.style.width = b.dataset.w + '%';
+          });
+        }, 200);
+      }
+    }
+  });
 }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
 
 document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
