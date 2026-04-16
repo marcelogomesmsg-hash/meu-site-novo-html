@@ -7,6 +7,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=IBM+Plex+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
+/* ═══════════════════════════════════════
+   TOKENS
+═══════════════════════════════════════ */
 :root {
   --bg:        #08090a;
   --surface:   #0f1114;
@@ -23,132 +26,110 @@
   --mono:      'IBM Plex Mono', monospace;
   --sans:      'DM Sans', sans-serif;
   --max:       640px;
+  --dmax:      1200px;
   --glow-r:    0 0 24px rgba(224,50,31,.4);
   --glow-g:    0 0 24px rgba(0,201,122,.35);
 }
 * { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior:smooth; }
 body { background:var(--bg); color:var(--white); font-family:var(--sans); font-size:17px; line-height:1.7; overflow-x:hidden; }
-
-/* grid */
-body::before {
-  content:''; position:fixed; inset:0; pointer-events:none; z-index:0;
-  background-image: linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px), linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
-  background-size:48px 48px;
-}
-/* grain */
-body::after {
-  content:''; position:fixed; inset:0; pointer-events:none; z-index:202; opacity:.28;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23g)' opacity='.05'/%3E%3C/svg%3E");
-}
+body::before { content:''; position:fixed; inset:0; pointer-events:none; z-index:0; background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px); background-size:48px 48px; }
+body::after  { content:''; position:fixed; inset:0; pointer-events:none; z-index:202; opacity:.28; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23g)' opacity='.05'/%3E%3C/svg%3E"); }
 .scanline { position:fixed; inset:0; pointer-events:none; z-index:200; background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.06) 3px,rgba(0,0,0,.06) 4px); }
 .progress-bar { position:fixed; top:0; left:0; z-index:999; height:2px; width:0%; background:linear-gradient(90deg,var(--red),var(--amber)); box-shadow:var(--glow-r); transition:width .1s linear; }
 
-.wrap { max-width:var(--max); margin:0 auto; padding:0 20px; position:relative; z-index:1; }
+/* ═══════════════════════════════════════
+   BASE — MOBILE FIRST (não mexer)
+═══════════════════════════════════════ */
+.wrap     { max-width:var(--max); margin:0 auto; padding:0 20px; position:relative; z-index:1; }
+.sep      { display:block; height:1px; opacity:.5; background:linear-gradient(90deg,transparent,var(--red),transparent); }
+.sep-green{ background:linear-gradient(90deg,transparent,var(--green),transparent); }
+.sep-dim  { background:linear-gradient(90deg,transparent,var(--dim2),transparent); opacity:1; }
+.section  { padding:52px 0 44px; position:relative; }
+.reveal   { opacity:0; transform:translateY(18px); transition:opacity .6s ease,transform .6s ease; }
+.reveal.visible { opacity:1; transform:none; }
 
-.sep { display:block; height:1px; opacity:.5; background:linear-gradient(90deg,transparent,var(--red),transparent); }
-.sep-green { background:linear-gradient(90deg,transparent,var(--green),transparent); }
-.sep-dim { background:linear-gradient(90deg,transparent,var(--dim2),transparent); opacity:1; }
+@keyframes blink    { 0%,100%{opacity:1}50%{opacity:0} }
+@keyframes pulse-r  { 0%,100%{box-shadow:0 0 8px var(--red)}  50%{box-shadow:0 0 20px var(--red)} }
+@keyframes pulse-g  { 0%,100%{box-shadow:0 0 8px var(--green)}50%{box-shadow:0 0 20px var(--green)} }
+@keyframes scanmove { from{top:-2px}to{top:102%} }
 
-.sys-label { font-family:var(--mono); font-size:9px; letter-spacing:.22em; text-transform:uppercase; color:var(--dim); display:flex; align-items:center; gap:8px; margin-bottom:18px; }
-.sys-label .dot { width:5px; height:5px; border-radius:50%; flex-shrink:0; background:var(--red); box-shadow:0 0 8px var(--red); }
-.sys-label .dot-green { background:var(--green); box-shadow:0 0 8px var(--green); }
-.sys-label .dot-amber { background:var(--amber); box-shadow:0 0 8px var(--amber); }
-
+/* tipografia */
 .h1 { font-family:var(--serif); font-size:clamp(38px,9vw,64px); font-weight:900; line-height:1.05; letter-spacing:-.025em; }
 .h2 { font-family:var(--serif); font-size:clamp(28px,7vw,48px); font-weight:900; line-height:1.08; letter-spacing:-.02em; }
 .h3 { font-family:var(--serif); font-size:clamp(20px,5vw,32px); font-weight:700; line-height:1.2; }
-.red-em { color:var(--red); font-style:italic; }
+.red-em   { color:var(--red);   font-style:italic; }
 .amber-em { color:var(--amber); font-style:italic; }
 .green-em { color:var(--green); font-style:italic; }
-
 .body { font-size:17px; line-height:1.75; margin-top:14px; color:rgba(238,240,242,.7); }
 .body strong { color:var(--white); font-weight:600; }
 
-.section { padding:52px 0 44px; position:relative; }
+/* sys-label */
+.sys-label { font-family:var(--mono); font-size:9px; letter-spacing:.22em; text-transform:uppercase; color:var(--dim); display:flex; align-items:center; gap:8px; margin-bottom:18px; }
+.sys-label .dot       { width:5px; height:5px; border-radius:50%; flex-shrink:0; background:var(--red);   box-shadow:0 0 8px var(--red); }
+.sys-label .dot-green { background:var(--green); box-shadow:0 0 8px var(--green); }
+.sys-label .dot-amber { background:var(--amber); box-shadow:0 0 8px var(--amber); }
 
-/* BOTÕES */
-.btn {
-  display:block; max-width:480px; margin:0 auto; text-align:center;
-  font-family:var(--mono); font-size:11px; font-weight:400;
-  letter-spacing:.12em; text-transform:uppercase;
-  text-decoration:none; padding:18px 28px; cursor:pointer;
-  position:relative; border:1px solid currentColor;
-  transition:all .22s ease; overflow:hidden; line-height:1.5;
-}
-.btn::after { content:''; position:absolute; top:0; left:-100%; width:100%; height:100%; background:linear-gradient(90deg,transparent,rgba(255,255,255,.05),transparent); transition:left .4s ease; pointer-events:none; }
+/* botões */
+.btn { display:block; max-width:480px; margin:0 auto; text-align:center; font-family:var(--mono); font-size:11px; font-weight:400; letter-spacing:.12em; text-transform:uppercase; text-decoration:none; padding:18px 28px; cursor:pointer; position:relative; border:1px solid currentColor; transition:all .22s ease; overflow:hidden; line-height:1.5; }
+.btn::after  { content:''; position:absolute; top:0; left:-100%; width:100%; height:100%; background:linear-gradient(90deg,transparent,rgba(255,255,255,.05),transparent); transition:left .4s ease; pointer-events:none; }
 .btn:hover::after { left:120%; }
 .btn::before { content:''; position:absolute; inset:-4px; border:1px solid currentColor; opacity:.15; pointer-events:none; }
-.btn-red   { background:var(--red-dim);   color:var(--red);   border-color:var(--red);   box-shadow:var(--glow-r); }
-.btn-red:hover   { background:var(--red);   color:#fff; }
-.btn-ghost { background:transparent; color:var(--dim); border-color:var(--dim2); }
-.btn-ghost:hover { color:var(--red); border-color:var(--red); box-shadow:var(--glow-r); }
 .btn-green { background:var(--green-dim); color:var(--green); border-color:var(--green); box-shadow:var(--glow-g); }
 .btn-green:hover { background:var(--green); color:#071a0e; }
+.btn-ghost { background:transparent; color:var(--dim); border-color:var(--dim2); }
+.btn-ghost:hover { color:var(--green); border-color:var(--green); box-shadow:var(--glow-g); }
 .btn-wrap { max-width:var(--max); margin:0 auto; padding:28px 20px; position:relative; z-index:1; }
 
-.reveal { opacity:0; transform:translateY(18px); transition:opacity .6s ease,transform .6s ease; }
-.reveal.visible { opacity:1; transform:none; }
-
-@keyframes blink { 0%,100%{opacity:1}50%{opacity:0} }
-@keyframes pulse-r { 0%,100%{box-shadow:0 0 8px var(--red)}50%{box-shadow:0 0 20px var(--red)} }
-@keyframes pulse-g { 0%,100%{box-shadow:0 0 8px var(--green)}50%{box-shadow:0 0 20px var(--green)} }
-@keyframes scanmove { from{top:-2px}to{top:102%} }
-
-/* HERO */
+/* HERO mobile */
 .hero { min-height:100svh; display:flex; flex-direction:column; justify-content:center; padding:48px 0 0; position:relative; overflow:hidden; }
 .hero-glow { position:absolute; top:0; left:50%; transform:translateX(-50%); width:700px; height:500px; background:radial-gradient(ellipse,rgba(224,50,31,.07) 0%,transparent 65%); pointer-events:none; z-index:0; }
 .hero-coords { position:absolute; bottom:28px; right:20px; font-family:var(--mono); font-size:8px; color:var(--dim2); letter-spacing:.12em; line-height:2; text-align:right; pointer-events:none; z-index:1; }
 .cursor { display:inline-block; width:3px; height:.9em; background:var(--red); vertical-align:middle; margin-left:3px; animation:blink 1s step-end infinite; }
 .hero-sub { margin-top:20px; font-size:18px; font-weight:300; color:rgba(238,240,242,.5); line-height:1.6; border-left:2px solid var(--red); padding-left:14px; }
 .hero-cta { margin-top:28px; padding-bottom:52px; }
+/* blocos exclusivos desktop — ocultos no mobile */
+.hero-inner-desktop,
+.lead-desktop,
+.virada-desktop,
+.autoridade-desktop,
+.diag-desktop { display:none; }
 
-.status-bar {
-  display:flex; gap:20px; flex-wrap:wrap;
-  padding:14px 20px; border-top:1px solid var(--dim2); border-bottom:1px solid var(--dim2);
-  margin:28px 0 0; max-width:var(--max);
-  font-family:var(--mono); font-size:9px; letter-spacing:.1em; color:var(--dim);
-}
+.status-bar { display:flex; gap:20px; flex-wrap:wrap; padding:14px 20px; border-top:1px solid var(--dim2); border-bottom:1px solid var(--dim2); margin:28px 0 0; max-width:var(--max); font-family:var(--mono); font-size:9px; letter-spacing:.1em; color:var(--dim); }
 .status-item { display:flex; align-items:center; gap:6px; }
 .status-dot { width:5px; height:5px; border-radius:50%; background:var(--red); animation:pulse-r 2s ease-in-out infinite; }
 .status-dot.ok { background:var(--green); animation:pulse-g 2s ease-in-out infinite; }
 .status-val { color:var(--red); font-weight:500; }
 .status-val.ok { color:var(--green); }
 
-/* LEAD */
+/* LEAD mobile */
 .lead-section { position:relative; overflow:hidden; background:var(--surface); }
 .lead-section::before { content:''; position:absolute; inset:0; pointer-events:none; background-image:radial-gradient(circle,rgba(224,50,31,.07) 1px,transparent 1px); background-size:32px 32px; }
-
-.paga-conta {
-  display:block; font-family:var(--serif); font-size:clamp(24px,6.5vw,40px); font-weight:900;
-  line-height:1.2; margin-top:24px; padding:20px 24px; color:var(--red); text-align:center;
-  position:relative; border:1px solid var(--red); box-shadow:inset 0 0 40px rgba(224,50,31,.05),var(--glow-r);
-}
+.lead-visual { display:none; }
+.paga-conta { display:block; font-family:var(--serif); font-size:clamp(24px,6.5vw,40px); font-weight:900; line-height:1.2; margin-top:24px; padding:20px 24px; color:var(--red); text-align:center; position:relative; border:1px solid var(--red); box-shadow:inset 0 0 40px rgba(224,50,31,.05),var(--glow-r); }
 .paga-conta::before { content:''; position:absolute; inset:-5px; border:1px solid var(--red); opacity:.2; }
 .paga-conta i { position:absolute; width:8px; height:8px; border-color:var(--red); border-style:solid; opacity:.7; }
-.paga-conta i:nth-child(1) { top:-2px; left:-2px; border-width:2px 0 0 2px; }
-.paga-conta i:nth-child(2) { top:-2px; right:-2px; border-width:2px 2px 0 0; }
-.paga-conta i:nth-child(3) { bottom:-2px; left:-2px; border-width:0 0 2px 2px; }
-.paga-conta i:nth-child(4) { bottom:-2px; right:-2px; border-width:0 2px 2px 0; }
+.paga-conta i:nth-child(1){top:-2px;left:-2px;border-width:2px 0 0 2px}
+.paga-conta i:nth-child(2){top:-2px;right:-2px;border-width:2px 2px 0 0}
+.paga-conta i:nth-child(3){bottom:-2px;left:-2px;border-width:0 0 2px 2px}
+.paga-conta i:nth-child(4){bottom:-2px;right:-2px;border-width:0 2px 2px 0}
 
-/* VIRADA */
+/* VIRADA mobile */
 .virada-section { background:var(--surface2); padding:48px 0 40px; position:relative; overflow:hidden; }
 .virada-section::after { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent,var(--red),transparent); opacity:.5; }
+.virada-visual { display:none; }
 
-/* PROBLEMA CARDS */
-.problema-card {
-  padding:28px 20px 24px; border-bottom:1px solid var(--dim2);
-  max-width:var(--max); margin:0 auto; position:relative;
-  transition:background .3s ease,box-shadow .3s ease; background:transparent; cursor:default; overflow:hidden;
-}
+/* PROBLEMA CARDS mobile */
+.problema-cards-wrap { position:relative; }
+.problema-card { padding:28px 20px 24px; border-bottom:1px solid var(--dim2); max-width:var(--max); margin:0 auto; position:relative; transition:background .3s ease,box-shadow .3s ease; background:transparent; cursor:default; overflow:hidden; }
 .problema-card:last-of-type { border-bottom:none; }
 .problema-card::after { content:''; position:absolute; left:0; top:-2px; width:100%; height:2px; background:linear-gradient(90deg,transparent,var(--red),transparent); opacity:0; }
 .problema-card.active::after { opacity:.6; animation:scanmove .7s ease forwards; }
-.problema-card.active { background:rgba(224,50,31,.04); box-shadow:inset 0 0 0 1px rgba(224,50,31,.2), inset 4px 0 0 var(--red); }
-.problema-card:hover { background:rgba(224,50,31,.05); box-shadow:inset 0 0 0 1px rgba(224,50,31,.25), inset 4px 0 0 var(--red); }
-.problema-num { font-family:var(--mono); font-size:10px; letter-spacing:.2em; color:var(--red); opacity:.55; margin-bottom:8px; display:block; }
+.problema-card.active { background:rgba(224,50,31,.04); box-shadow:inset 0 0 0 1px rgba(224,50,31,.2),inset 4px 0 0 var(--red); }
+.problema-card:hover   { background:rgba(224,50,31,.05); box-shadow:inset 0 0 0 1px rgba(224,50,31,.25),inset 4px 0 0 var(--red); }
+.problema-num   { font-family:var(--mono); font-size:10px; letter-spacing:.2em; color:var(--red); opacity:.55; margin-bottom:8px; display:block; }
 .problema-title { font-family:var(--serif); font-size:clamp(22px,5.5vw,34px); font-weight:900; line-height:1.1; margin-bottom:10px; color:var(--white); }
-.problema-desc { font-size:15px; color:var(--dim); line-height:1.65; }
+.problema-desc  { font-size:15px; color:var(--dim); line-height:1.65; }
 
 /* FILTRO */
 .filtro-block { background:var(--surface2); border-left:3px solid var(--red); padding:36px 20px; position:relative; }
@@ -160,13 +141,13 @@ body::after {
 .result-punch { background:var(--surface2); padding:44px 20px; text-align:center; position:relative; overflow:hidden; border-top:1px solid var(--dim2); border-bottom:1px solid var(--dim2); }
 .result-punch::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at center,rgba(224,50,31,.06) 0%,transparent 70%); pointer-events:none; }
 
-/* AUTORIDADE */
+/* AUTORIDADE mobile */
 .autoridade-section { position:relative; overflow:hidden; background:var(--surface); }
 .autoridade-section::before { content:''; position:absolute; inset:0; background-image:repeating-linear-gradient(0deg,rgba(255,255,255,.015) 0,rgba(255,255,255,.015) 1px,transparent 1px,transparent 36px); pointer-events:none; }
-.big-stat { font-family:var(--serif); font-size:clamp(72px,22vw,130px); font-weight:900; line-height:.9; letter-spacing:-.04em; color:var(--red); display:block; margin-bottom:4px; text-shadow:var(--glow-r); }
+.big-stat       { font-family:var(--serif); font-size:clamp(72px,22vw,130px); font-weight:900; line-height:.9; letter-spacing:-.04em; color:var(--red); display:block; margin-bottom:4px; text-shadow:var(--glow-r); }
 .big-stat-label { font-family:var(--mono); font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--dim); display:block; margin-bottom:24px; }
 
-/* DIAGNÓSTICO */
+/* DIAGNÓSTICO mobile */
 .diag-section { background:var(--surface2); position:relative; overflow:hidden; }
 .diag-section::before { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent,var(--amber),transparent); opacity:.4; }
 .bullet-row { display:flex; gap:16px; padding:18px 0; border-bottom:1px solid var(--dim2); align-items:flex-start; transition:background .2s; }
@@ -175,7 +156,7 @@ body::after {
 .bn { font-family:var(--mono); font-size:10px; color:var(--amber); padding-top:4px; flex-shrink:0; width:24px; text-shadow:0 0 8px var(--amber); }
 .bt { font-size:16px; line-height:1.65; color:rgba(238,240,242,.75); }
 
-/* NÃO */
+/* NÃO / SIM mobile */
 .nao-section { background:var(--surface); padding:52px 20px; position:relative; overflow:hidden; border-top:1px solid rgba(224,50,31,.3); }
 .nao-section::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at top right,rgba(224,50,31,.05) 0%,transparent 60%); pointer-events:none; }
 .nao-inner { max-width:var(--max); margin:0 auto; position:relative; z-index:1; }
@@ -183,8 +164,6 @@ body::after {
 .nao-item:last-of-type { border-bottom:none; }
 .nao-x { font-family:var(--mono); font-size:12px; color:var(--red); flex-shrink:0; padding-top:3px; text-shadow:0 0 8px var(--red); }
 .nao-stamp { font-family:var(--serif); font-size:clamp(56px,16vw,110px); font-weight:900; font-style:italic; color:var(--red); line-height:1; margin-top:28px; letter-spacing:-.02em; text-shadow:var(--glow-r); }
-
-/* SIM */
 .sim-section { background:var(--surface2); padding:52px 20px; position:relative; overflow:hidden; border-top:1px solid rgba(0,201,122,.2); }
 .sim-section::before { content:''; position:absolute; inset:0; background-image:radial-gradient(circle,rgba(0,201,122,.04) 1px,transparent 1px); background-size:28px 28px; pointer-events:none; }
 .sim-section::after { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent,var(--green),transparent); opacity:.4; }
@@ -193,23 +172,268 @@ body::after {
 .sim-item:last-child { border-bottom:none; }
 .sim-check { font-family:var(--mono); font-size:12px; color:var(--green); flex-shrink:0; padding-top:3px; text-shadow:0 0 8px var(--green); }
 
-/* QUOTE */
+/* QUOTE / CTA FINAL / FECHAMENTO */
 .quote-block { background:var(--surface); padding:56px 20px; position:relative; overflow:hidden; border-top:1px solid var(--dim2); border-bottom:1px solid var(--dim2); }
 .quote-block::before { content:'\201C'; position:absolute; top:-60px; left:0; font-family:var(--serif); font-size:320px; font-weight:900; color:var(--red); opacity:.04; line-height:1; pointer-events:none; }
 .quote-inner { max-width:var(--max); margin:0 auto; text-align:center; position:relative; z-index:1; }
-.quote-text { font-family:var(--serif); font-size:clamp(20px,5.5vw,34px); font-style:italic; color:var(--white); line-height:1.35; margin-bottom:16px; }
+.quote-text  { font-family:var(--serif); font-size:clamp(20px,5.5vw,34px); font-style:italic; color:var(--white); line-height:1.35; margin-bottom:16px; }
 .quote-line2 { font-family:var(--serif); font-size:clamp(16px,4vw,24px); font-weight:700; color:var(--red); text-shadow:0 0 16px rgba(224,50,31,.4); }
-
-/* CTA FINAL */
-.cta-final { background:var(--surface2); padding:64px 20px; text-align:center; position:relative; overflow:hidden; border-top:1px solid rgba(224,50,31,.2); }
-.cta-final::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at center,rgba(224,50,31,.06) 0%,transparent 65%); pointer-events:none; }
+.cta-final { background:var(--surface2); padding:64px 20px; text-align:center; position:relative; overflow:hidden; border-top:1px solid rgba(0,201,122,.2); }
+.cta-final::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at center,rgba(0,201,122,.05) 0%,transparent 65%); pointer-events:none; }
 .terminal-line { font-family:var(--mono); font-size:10px; color:var(--dim); letter-spacing:.12em; margin-bottom:12px; opacity:.6; }
 .terminal-line span { color:var(--green); }
-
-/* FECHAMENTO */
 .fechamento { padding:48px 20px 64px; text-align:center; position:relative; z-index:1; border-top:1px solid var(--dim2); }
-.fecha-body { font-size:16px; color:var(--dim); line-height:1.7; margin-bottom:14px; }
+.fecha-body  { font-size:16px; color:var(--dim); line-height:1.7; margin-bottom:14px; }
 .fecha-final { font-family:var(--serif); font-size:clamp(18px,5vw,26px); font-style:italic; font-weight:700; color:rgba(238,240,242,.5); }
+
+/* ═══════════════════════════════════════
+   DESKTOP — @media min-width: 900px
+   Tudo abaixo só afeta desktop
+═══════════════════════════════════════ */
+@media (min-width: 900px) {
+
+  /* mostra blocos exclusivos desktop */
+  .hero-inner-desktop,
+  .lead-desktop,
+  .virada-desktop,
+  .autoridade-desktop,
+  .diag-desktop { display:block; }
+
+  /* oculta duplicatas mobile */
+  .hero > .wrap,
+  .hero > .status-bar,
+  .hero > .wrap.hero-cta,
+  .lead-section > .wrap,
+  .lead-section > .btn-wrap,
+  .virada-section > .wrap,
+  .autoridade-section > .wrap,
+  .diag-section > .wrap { display:none !important; }
+
+  /* reset wrap para desktop full-width */
+  .wrap { max-width:var(--dmax); padding:0 60px; }
+  .btn-wrap { max-width:var(--dmax); padding:36px 60px; }
+  .btn { margin:0; max-width:400px; }
+
+  /* ── HERO DESKTOP ── */
+  .hero { padding:0; min-height:100vh; }
+  .hero-glow { width:50%; left:25%; }
+
+  .hero-inner-desktop {
+    max-width:var(--dmax); margin:0 auto; padding:0 60px;
+    display:grid; grid-template-columns:1fr 1fr;
+    align-items:center; gap:80px;
+    min-height:100vh; position:relative; z-index:1;
+  }
+
+  .hero-text { display:flex; flex-direction:column; justify-content:center; }
+  .hero-text .h1 { font-size:clamp(44px,4.5vw,72px); }
+
+  .hero-visual {
+    display:flex; align-items:center; justify-content:center;
+    position:relative;
+  }
+
+  /* visual abstrato lado direito hero — dashboard fake */
+  .hero-dashboard {
+    width:100%; max-width:480px;
+    border:1px solid var(--dim2);
+    background:var(--surface);
+    padding:28px;
+    position:relative;
+  }
+  .hero-dashboard::before { content:''; position:absolute; inset:-6px; border:1px solid var(--dim2); opacity:.3; pointer-events:none; }
+  /* corner ticks */
+  .hd-corner { position:absolute; width:10px; height:10px; border-color:var(--green); border-style:solid; opacity:.7; }
+  .hd-corner:nth-child(1){top:-2px;left:-2px;border-width:2px 0 0 2px}
+  .hd-corner:nth-child(2){top:-2px;right:-2px;border-width:2px 2px 0 0}
+  .hd-corner:nth-child(3){bottom:-2px;left:-2px;border-width:0 0 2px 2px}
+  .hd-corner:nth-child(4){bottom:-2px;right:-2px;border-width:0 2px 2px 0}
+
+  .hd-title { font-family:var(--mono); font-size:9px; letter-spacing:.2em; text-transform:uppercase; color:var(--dim); margin-bottom:20px; display:flex; align-items:center; gap:8px; }
+  .hd-title::before { content:''; width:5px; height:5px; border-radius:50%; background:var(--green); box-shadow:0 0 8px var(--green); }
+
+  .hd-metric { display:flex; justify-content:space-between; align-items:flex-end; padding:14px 0; border-bottom:1px solid var(--dim2); }
+  .hd-metric:last-child { border-bottom:none; }
+  .hd-metric-label { font-family:var(--mono); font-size:10px; letter-spacing:.1em; color:var(--dim); text-transform:uppercase; }
+  .hd-metric-val { font-family:var(--serif); font-size:32px; font-weight:900; line-height:1; }
+  .hd-metric-val.bad  { color:var(--red);   text-shadow:var(--glow-r); }
+  .hd-metric-val.warn { color:var(--amber); text-shadow:0 0 16px rgba(245,158,11,.4); }
+  .hd-metric-val.ok   { color:var(--green); text-shadow:var(--glow-g); }
+
+  .hd-bar-wrap { height:4px; background:var(--dim2); margin-top:6px; }
+  .hd-bar { height:100%; transition:width 1.5s cubic-bezier(.16,1,.3,1); }
+  .hd-bar.bad  { background:var(--red); box-shadow:var(--glow-r); }
+  .hd-bar.warn { background:var(--amber); }
+  .hd-bar.ok   { background:var(--green); box-shadow:var(--glow-g); }
+
+  .status-bar { max-width:var(--dmax); margin:0 60px; }
+  .hero-cta { padding-bottom:0; }
+
+  /* esconde elementos do hero mobile no desktop */
+  .hero > .wrap,
+  .hero > .status-bar,
+  .hero > .wrap.hero-cta { display:none; }
+
+  /* ── LEAD DESKTOP ── */
+  .lead-section .lead-desktop {
+    max-width:var(--dmax); margin:0 auto; padding:80px 60px;
+    display:grid; grid-template-columns:1fr 1fr;
+    align-items:center; gap:80px;
+    position:relative; z-index:1;
+  }
+
+  .lead-section .wrap,
+  .lead-section .btn-wrap { display:none; }
+
+  .lead-visual {
+    display:flex; align-items:center; justify-content:center;
+    order:-1; /* imagem à esquerda */
+  }
+
+  /* visual abstrato lead — gráfico de perda */
+  .lead-chart {
+    width:100%; max-width:420px;
+    border:1px solid rgba(224,50,31,.25);
+    background:var(--surface2);
+    padding:28px; position:relative;
+  }
+  .lead-chart::before { content:''; position:absolute; inset:-6px; border:1px solid rgba(224,50,31,.1); pointer-events:none; }
+  .lc-title { font-family:var(--mono); font-size:9px; letter-spacing:.2em; text-transform:uppercase; color:var(--dim); margin-bottom:20px; display:flex; align-items:center; gap:8px; }
+  .lc-title::before { content:''; width:5px; height:5px; border-radius:50%; background:var(--red); box-shadow:0 0 8px var(--red); }
+
+  .lc-row { display:flex; align-items:center; gap:12px; padding:10px 0; border-bottom:1px solid var(--dim2); }
+  .lc-row:last-child { border-bottom:none; }
+  .lc-name  { font-family:var(--mono); font-size:9px; letter-spacing:.1em; color:var(--dim); width:100px; flex-shrink:0; text-transform:uppercase; }
+  .lc-track { flex:1; height:8px; background:var(--dim2); position:relative; }
+  .lc-fill  { height:100%; position:absolute; left:0; top:0; }
+  .lc-fill.full { width:94%; background:var(--red);   box-shadow:var(--glow-r); }
+  .lc-fill.low  { width:12%; background:var(--green); box-shadow:var(--glow-g); }
+  .lc-fill.zero { width:2%;  background:var(--amber); }
+  .lc-num { font-family:var(--mono); font-size:11px; width:36px; text-align:right; flex-shrink:0; }
+  .lc-num.bad  { color:var(--red); }
+  .lc-num.ok   { color:var(--green); }
+  .lc-num.warn { color:var(--amber); }
+
+  .lead-text { display:flex; flex-direction:column; }
+  .lead-text .paga-conta { font-size:clamp(26px,2.5vw,38px); }
+
+  .lead-desktop-btn { margin-top:28px; }
+  .lead-desktop-btn a { margin:0; }
+
+  /* ── VIRADA DESKTOP ── */
+  .virada-section .virada-desktop {
+    max-width:var(--dmax); margin:0 auto; padding:80px 60px;
+    display:grid; grid-template-columns:1fr 1fr;
+    align-items:center; gap:80px;
+    position:relative; z-index:1;
+  }
+  .virada-section .wrap { display:none; }
+
+  .virada-visual {
+    display:flex; align-items:center; justify-content:center;
+  }
+
+  /* visual abstrato virada — signal disruption */
+  .signal-box {
+    width:100%; max-width:400px;
+    border:1px solid rgba(245,158,11,.2);
+    background:var(--surface);
+    padding:28px; position:relative;
+  }
+  .signal-box::before { content:''; position:absolute; inset:-6px; border:1px solid rgba(245,158,11,.08); pointer-events:none; }
+  .sb-title { font-family:var(--mono); font-size:9px; letter-spacing:.2em; text-transform:uppercase; color:var(--dim); margin-bottom:20px; display:flex; align-items:center; gap:8px; }
+  .sb-title::before { content:''; width:5px; height:5px; border-radius:50%; background:var(--amber); box-shadow:0 0 8px var(--amber); }
+  .sb-item { display:flex; align-items:center; gap:12px; padding:10px 0; border-bottom:1px solid var(--dim2); font-family:var(--mono); font-size:10px; color:var(--dim); letter-spacing:.08em; }
+  .sb-item:last-child { border-bottom:none; }
+  .sb-icon { font-size:16px; flex-shrink:0; width:24px; text-align:center; }
+  .sb-status { margin-left:auto; font-size:9px; letter-spacing:.15em; }
+  .sb-status.err  { color:var(--red);   text-shadow:0 0 8px var(--red); }
+  .sb-status.warn { color:var(--amber); text-shadow:0 0 8px var(--amber); }
+
+  /* ── FATORES — GRID 3x2 desktop ── */
+  .problema-cards-wrap {
+    max-width:var(--dmax); margin:0 auto;
+    padding:0 60px 52px;
+    display:grid; grid-template-columns:repeat(3,1fr);
+    gap:1px; background:var(--dim2);
+  }
+
+  .problema-card {
+    max-width:none; margin:0;
+    padding:36px 28px 32px;
+    border-bottom:none;
+    background:var(--surface);
+  }
+  .problema-card:hover { background:rgba(224,50,31,.06); box-shadow:inset 0 0 0 1px rgba(224,50,31,.3); }
+  .problema-card.active { background:rgba(224,50,31,.05); box-shadow:inset 0 0 0 1px rgba(224,50,31,.25),inset 0 3px 0 var(--red); }
+
+  /* ícone grande */
+  .problema-icon { font-size:28px; display:block; margin-bottom:12px; }
+  .problema-desc { display:none; } /* só título e ícone no desktop */
+  .problema-title { font-size:18px; }
+  .problema-num   { font-size:9px; }
+
+  /* ── AUTORIDADE DESKTOP — split ── */
+  .autoridade-section .autoridade-desktop {
+    max-width:var(--dmax); margin:0 auto; padding:80px 60px;
+    display:grid; grid-template-columns:auto 1fr;
+    align-items:center; gap:80px;
+    position:relative; z-index:1;
+  }
+  .autoridade-section .wrap,
+  .autoridade-section + .btn-wrap { max-width:var(--dmax); padding-left:60px; padding-right:60px; }
+  .autoridade-section > .wrap { display:none; }
+
+  .aut-stat-col { flex-shrink:0; }
+  .aut-stat-col .big-stat { font-size:clamp(100px,10vw,160px); }
+  .aut-stat-col .big-stat-label { font-size:11px; }
+
+  .aut-text-col { border-left:1px solid var(--dim2); padding-left:60px; }
+  .aut-text-col .sys-label { margin-bottom:12px; }
+
+  /* ── DIAGNÓSTICO DESKTOP — ícones em grid ── */
+  .diag-section .diag-desktop {
+    max-width:var(--dmax); margin:0 auto; padding:80px 60px;
+    position:relative; z-index:1;
+  }
+  .diag-section > .wrap { display:none; }
+
+  .diag-grid-desktop {
+    display:grid; grid-template-columns:repeat(5,1fr);
+    gap:1px; background:var(--dim2); margin-top:40px;
+  }
+
+  .diag-card-desktop {
+    background:var(--surface); padding:28px 20px;
+    display:flex; flex-direction:column; align-items:flex-start; gap:12px;
+    transition:background .2s;
+  }
+  .diag-card-desktop:hover { background:rgba(245,158,11,.05); }
+  .diag-card-icon { font-size:24px; }
+  .diag-card-num  { font-family:var(--mono); font-size:9px; letter-spacing:.2em; color:var(--amber); text-shadow:0 0 8px var(--amber); }
+  .diag-card-text { font-size:14px; line-height:1.5; color:rgba(238,240,242,.75); }
+
+  /* ── NÃO / SIM LADO A LADO ── */
+  .nao-sim-desktop {
+    display:grid; grid-template-columns:1fr 1fr;
+    max-width:var(--dmax); margin:0 auto;
+  }
+
+  .nao-section,
+  .sim-section { padding:64px 60px; }
+  .nao-inner,
+  .sim-inner { max-width:none; }
+
+  .nao-stamp { font-size:80px; }
+
+  /* ── QUOTE / CTA ── */
+  .quote-inner { max-width:860px; }
+  .quote-text  { font-size:clamp(24px,2.5vw,40px); }
+
+  .cta-final .wrap { max-width:var(--dmax); }
+  .cta-final .btn  { max-width:500px; font-size:12px; }
+
+} /* fim @media desktop */
 </style>
 </head>
 <body>
@@ -217,35 +441,73 @@ body::after {
 <div class="scanline"></div>
 <div class="progress-bar" id="progress"></div>
 
-<!-- HERO -->
+<!-- ══════════ HERO ══════════ -->
 <div class="hero">
   <div class="hero-glow"></div>
   <div class="hero-coords">-22.9068° S<br>-43.1729° W<br>RIO DE JANEIRO</div>
 
+  <!-- MOBILE -->
   <div class="wrap">
     <div class="sys-label reveal"><span class="dot"></span>EFFICIENCY ON — SISTEMA ATIVO</div>
-    <h1 class="h1 reveal">
-      Você já investiu<br>em marketing...<br>
-      <span class="red-em">e o dinheiro foi<br>embora sem resultado?<span class="cursor"></span></span>
-    </h1>
+    <h1 class="h1 reveal">Você já investiu<br>em marketing...<br><span class="red-em">e o dinheiro foi<br>embora sem resultado?<span class="cursor"></span></span></h1>
     <p class="hero-sub reveal">Isso é mais comum do que parece. E quase sempre tem uma causa clara que ninguém te mostrou ainda.</p>
   </div>
-
   <div class="status-bar reveal">
     <div class="status-item"><span class="status-dot"></span><span>INVESTIMENTO</span><span class="status-val">ALTO</span></div>
     <div class="status-item"><span class="status-dot"></span><span>RESULTADO</span><span class="status-val">BAIXO</span></div>
     <div class="status-item"><span class="status-dot ok"></span><span>DIAGNÓSTICO</span><span class="status-val ok">DISPONÍVEL</span></div>
   </div>
-
   <div class="wrap hero-cta reveal">
     <a href="https://wa.me/5521982955678?text=Quero%20um%20diagn%C3%B3stico%20gratuito%20do%20meu%20marketing%20e%20vendas." target="_blank" class="btn btn-green">Quero entender onde meu dinheiro está indo</a>
+  </div>
+
+  <!-- DESKTOP -->
+  <div class="hero-inner-desktop">
+    <div class="hero-text">
+      <div class="sys-label reveal"><span class="dot"></span>EFFICIENCY ON — SISTEMA ATIVO</div>
+      <h1 class="h1 reveal">Você já investiu em marketing...<br><span class="red-em">e o dinheiro foi embora sem resultado?<span class="cursor"></span></span></h1>
+      <p class="hero-sub reveal">Isso é mais comum do que parece. E quase sempre tem uma causa clara que ninguém te mostrou ainda.</p>
+      <div style="margin-top:16px; margin-bottom:8px;" class="reveal">
+        <div class="status-bar" style="margin:0; padding:14px 0; max-width:none;">
+          <div class="status-item"><span class="status-dot"></span><span>INVESTIMENTO</span><span class="status-val">ALTO</span></div>
+          <div class="status-item"><span class="status-dot"></span><span>RESULTADO</span><span class="status-val">BAIXO</span></div>
+          <div class="status-item"><span class="status-dot ok"></span><span>DIAGNÓSTICO</span><span class="status-val ok">DISPONÍVEL</span></div>
+        </div>
+      </div>
+      <div class="hero-cta reveal">
+        <a href="https://wa.me/5521982955678?text=Quero%20um%20diagn%C3%B3stico%20gratuito%20do%20meu%20marketing%20e%20vendas." target="_blank" class="btn btn-green">Quero entender onde meu dinheiro está indo</a>
+      </div>
+    </div>
+    <div class="hero-visual reveal">
+      <div class="hero-dashboard">
+        <div class="hd-corner"></div><div class="hd-corner"></div><div class="hd-corner"></div><div class="hd-corner"></div>
+        <div class="hd-title">RELATÓRIO DE CAMPANHA</div>
+        <div class="hd-metric">
+          <div><div class="hd-metric-label">Verba investida</div><div class="hd-bar-wrap"><div class="hd-bar bad" data-w="94" style="width:0"></div></div></div>
+          <div class="hd-metric-val bad">R$ 18.400</div>
+        </div>
+        <div class="hd-metric">
+          <div><div class="hd-metric-label">Leads gerados</div><div class="hd-bar-wrap"><div class="hd-bar warn" data-w="42" style="width:0"></div></div></div>
+          <div class="hd-metric-val warn">47</div>
+        </div>
+        <div class="hd-metric">
+          <div><div class="hd-metric-label">Vendas fechadas</div><div class="hd-bar-wrap"><div class="hd-bar ok" data-w="8" style="width:0"></div></div></div>
+          <div class="hd-metric-val ok">2</div>
+        </div>
+        <div class="hd-metric">
+          <div><div class="hd-metric-label">Causa identificada</div><div class="hd-bar-wrap"><div class="hd-bar warn" data-w="0" style="width:0"></div></div></div>
+          <div class="hd-metric-val warn">?</div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
 <span class="sep"></span>
 
-<!-- LEAD -->
+<!-- ══════════ LEAD ══════════ -->
 <div class="lead-section section" id="problema">
+  <!-- MOBILE -->
   <div class="wrap">
     <div class="sys-label reveal"><span class="dot"></span>ANÁLISE DO PROBLEMA</div>
     <h2 class="h2 reveal">Existem agências ruins.<br>Você provavelmente<br><span class="red-em">já passou por uma.</span></h2>
@@ -255,27 +517,101 @@ body::after {
   <div class="btn-wrap reveal">
     <a href="https://wa.me/5521982955678?text=Quero%20um%20diagn%C3%B3stico%20gratuito%20do%20meu%20marketing%20e%20vendas." target="_blank" class="btn btn-green">Quero saber o que está travando meu resultado</a>
   </div>
+
+  <!-- DESKTOP -->
+  <div class="lead-desktop">
+    <div class="lead-visual reveal">
+      <div class="lead-chart">
+        <div class="lc-title">ANÁLISE DE INVESTIMENTO</div>
+        <div class="lc-row"><span class="lc-name">Verba alocada</span><div class="lc-track"><div class="lc-fill full"></div></div><span class="lc-num bad">94%</span></div>
+        <div class="lc-row"><span class="lc-name">Resultado gerado</span><div class="lc-track"><div class="lc-fill low"></div></div><span class="lc-num ok">12%</span></div>
+        <div class="lc-row"><span class="lc-name">Causa mapeada</span><div class="lc-track"><div class="lc-fill zero"></div></div><span class="lc-num warn">0%</span></div>
+      </div>
+    </div>
+    <div class="lead-text">
+      <div class="sys-label reveal"><span class="dot"></span>ANÁLISE DO PROBLEMA</div>
+      <h2 class="h2 reveal">Existem agências ruins.<br>Você provavelmente<br><span class="red-em">já passou por uma.</span></h2>
+      <p class="body reveal">O setor cresceu rápido. E junto vieram muitos amadores. Gente que sobe anúncio sem estratégia, não acompanha dados e não entende processo de venda.</p>
+      <div class="paga-conta reveal"><i></i><i></i><i></i><i></i>No final, quem paga a conta é você.</div>
+      <div class="lead-desktop-btn reveal">
+        <a href="https://wa.me/5521982955678?text=Quero%20um%20diagn%C3%B3stico%20gratuito%20do%20meu%20marketing%20e%20vendas." target="_blank" class="btn btn-green">Quero saber o que está travando meu resultado</a>
+      </div>
+    </div>
+  </div>
 </div>
 
 <span class="sep"></span>
 
-<!-- VIRADA -->
+<!-- ══════════ VIRADA ══════════ -->
 <div class="virada-section">
+  <!-- MOBILE -->
   <div class="wrap">
     <div class="sys-label reveal"><span class="dot dot-amber"></span>FATOR CRÍTICO IDENTIFICADO</div>
     <h2 class="h2 reveal">Mesmo quando a agência erra, outros fatores destroem <span class="amber-em">o resultado.</span></h2>
   </div>
+
+  <!-- DESKTOP -->
+  <div class="virada-desktop">
+    <div class="virada-text">
+      <div class="sys-label reveal"><span class="dot dot-amber"></span>FATOR CRÍTICO IDENTIFICADO</div>
+      <h2 class="h2 reveal">Mesmo quando a agência erra, outros fatores destroem <span class="amber-em">o resultado.</span></h2>
+    </div>
+    <div class="virada-visual reveal">
+      <div class="signal-box">
+        <div class="sb-title">DIAGNÓSTICO DO PROCESSO</div>
+        <div class="sb-item"><span class="sb-icon">⏱</span><span>Tempo de resposta ao lead</span><span class="sb-status err">CRÍTICO</span></div>
+        <div class="sb-item"><span class="sb-icon">🎯</span><span>Qualidade do tráfego</span><span class="sb-status err">FALHA</span></div>
+        <div class="sb-item"><span class="sb-icon">🔄</span><span>Processo comercial</span><span class="sb-status warn">ALERTA</span></div>
+        <div class="sb-item"><span class="sb-icon">📊</span><span>Acompanhamento de dados</span><span class="sb-status err">FALHA</span></div>
+        <div class="sb-item"><span class="sb-icon">💡</span><span>Diferenciação da oferta</span><span class="sb-status warn">ALERTA</span></div>
+        <div class="sb-item"><span class="sb-icon">📍</span><span>Presença na plataforma certa</span><span class="sb-status err">CRÍTICO</span></div>
+      </div>
+    </div>
+  </div>
 </div>
 
-<div class="problema-card reveal"><span class="problema-num">// 01</span><div class="problema-title">Muita demora para atender o lead que chega</div><div class="problema-desc">Lead que espera mais de 5 minutos perde o calor. O concorrente que responde rápido fecha a venda que era sua.</div></div>
-<div class="problema-card reveal"><span class="problema-num">// 02</span><div class="problema-title">Anúncio só atraindo leads curiosos</div><div class="problema-desc">Você sabe o porquê? Porque seu anúncio foi tratado como ímã. Mas ele deve ser um filtro. E existe uma lógica pra isso.</div></div>
-<div class="problema-card reveal"><span class="problema-num">// 03</span><div class="problema-title">Processo comercial que não se adequa à necessidade do público</div><div class="problema-desc">Tráfego sem funil de vendas é desperdício puro. O lead chega e o processo não está preparado pra ele.</div></div>
-<div class="problema-card reveal"><span class="problema-num">// 04</span><div class="problema-title">Falta de acompanhamento dos números do negócio</div><div class="problema-desc">Sem dados não existe decisão. Você repete o que não funciona sem saber que não funciona.</div></div>
-<div class="problema-card reveal"><span class="problema-num">// 05</span><div class="problema-title">Oferta igual a de todo mundo</div><div class="problema-desc">Se o cliente não enxerga diferença entre você e o concorrente, ele decide pelo preço. E nessa guerra, ninguém ganha.</div></div>
-<div class="problema-card reveal"><span class="problema-num">// 06</span><div class="problema-title">Mercado saturado</div><div class="problema-desc">Já parou pra ver se o seu público está onde você está investindo tempo e dinheiro? Plataforma errada, resultado zero.</div></div>
+<!-- FATORES — cards -->
+<div class="problema-cards-wrap">
+  <div class="problema-card reveal">
+    <span class="problema-icon">⏱</span>
+    <span class="problema-num">// 01</span>
+    <div class="problema-title">Muita demora para atender o lead que chega</div>
+    <div class="problema-desc">Lead que espera mais de 5 minutos perde o calor. O concorrente que responde rápido fecha a venda que era sua.</div>
+  </div>
+  <div class="problema-card reveal">
+    <span class="problema-icon">🎯</span>
+    <span class="problema-num">// 02</span>
+    <div class="problema-title">Anúncio só atraindo leads curiosos</div>
+    <div class="problema-desc">Seu anúncio foi tratado como ímã. Mas ele deve ser um filtro. E existe uma lógica pra isso.</div>
+  </div>
+  <div class="problema-card reveal">
+    <span class="problema-icon">🔄</span>
+    <span class="problema-num">// 03</span>
+    <div class="problema-title">Processo comercial que não se adequa ao público</div>
+    <div class="problema-desc">O lead chega e o processo não está preparado pra ele.</div>
+  </div>
+  <div class="problema-card reveal">
+    <span class="problema-icon">📊</span>
+    <span class="problema-num">// 04</span>
+    <div class="problema-title">Falta de acompanhamento dos números</div>
+    <div class="problema-desc">Sem dados não existe decisão. Você repete o que não funciona.</div>
+  </div>
+  <div class="problema-card reveal">
+    <span class="problema-icon">💡</span>
+    <span class="problema-num">// 05</span>
+    <div class="problema-title">Oferta igual a de todo mundo</div>
+    <div class="problema-desc">O cliente decide pelo preço. E nessa guerra, ninguém ganha.</div>
+  </div>
+  <div class="problema-card reveal">
+    <span class="problema-icon">📍</span>
+    <span class="problema-num">// 06</span>
+    <div class="problema-title">Mercado saturado</div>
+    <div class="problema-desc">Seu público está onde você está investindo?</div>
+  </div>
+</div>
 
 <div class="btn-wrap reveal">
-  <a href="https://wa.me/5521982955678?text=Quero%20um%20diagn%C3%B3stico%20gratuito%20do%20meu%20marketing%20e%20vendas." target="_blank" class="btn btn-green">Quero identificar qual desses erros está no meu negócio</a>
+  <a href="https://wa.me/5521982955678?text=Quero%20um%20diagn%C3%B3stico%20gratuito%20do%20meu%20marketing%20e%20vendas." target="_blank" class="btn btn-ghost">Quero identificar qual desses erros está no meu negócio</a>
 </div>
 
 <span class="sep"></span>
@@ -299,8 +635,9 @@ body::after {
 
 <span class="sep"></span>
 
-<!-- AUTORIDADE -->
+<!-- ══════════ AUTORIDADE ══════════ -->
 <div class="autoridade-section section" id="autoridade">
+  <!-- MOBILE -->
   <div class="wrap">
     <div class="sys-label reveal"><span class="dot dot-amber"></span>DADOS VERIFICADOS</div>
     <span class="big-stat reveal">1.7M</span>
@@ -308,6 +645,20 @@ body::after {
     <p class="body reveal">Depois de acompanhar mais de <strong>R$1.700.000 investidos</strong>, um padrão ficou claro:</p>
     <p class="body reveal">Negócios que crescem seguem uma lógica. Não é sorte. Não é tentativa. <strong>É estrutura.</strong></p>
     <p class="body reveal" style="margin-top:12px;">É o que a gente chama de <strong>Método Demanda Contínua</strong>, cinco etapas que cobrem desde a identificação da demanda até a conversão do lead, sem deixar gap no processo.</p>
+  </div>
+
+  <!-- DESKTOP -->
+  <div class="autoridade-desktop">
+    <div class="aut-stat-col">
+      <div class="sys-label reveal"><span class="dot dot-amber"></span>DADOS VERIFICADOS</div>
+      <span class="big-stat reveal">1.7M</span>
+      <span class="big-stat-label reveal">reais em campanhas</span>
+    </div>
+    <div class="aut-text-col">
+      <p class="body reveal">Depois de acompanhar mais de <strong>R$1.700.000 investidos</strong>, um padrão ficou claro:</p>
+      <p class="body reveal">Negócios que crescem seguem uma lógica. Não é sorte. Não é tentativa. <strong>É estrutura.</strong></p>
+      <p class="body reveal" style="margin-top:12px;">É o que a gente chama de <strong>Método Demanda Contínua</strong>, cinco etapas que cobrem desde a identificação da demanda até a conversão do lead, sem deixar gap no processo.</p>
+    </div>
   </div>
 </div>
 
@@ -317,8 +668,9 @@ body::after {
 
 <span class="sep"></span>
 
-<!-- DIAGNÓSTICO -->
+<!-- ══════════ DIAGNÓSTICO ══════════ -->
 <div class="diag-section section" id="diagnostico">
+  <!-- MOBILE -->
   <div class="wrap">
     <div class="sys-label reveal"><span class="dot dot-amber"></span>DIAGNÓSTICO GRATUITO</div>
     <h2 class="h3 reveal">Proponho para você um diagnóstico gratuito para entendermos em qual fase você está com problema hoje.</h2>
@@ -328,6 +680,39 @@ body::after {
     <div class="bullet-row reveal"><span class="bn">04</span><span class="bt">Se o tráfego tava orientado a lead qualificado ou poluído</span></div>
     <div class="bullet-row reveal"><span class="bn">05</span><span class="bt">Se na hora de chutar pro gol e fechar a venda, você tem atendido de maneira rápida, com qualidade e orientado a conversão</span></div>
   </div>
+
+  <!-- DESKTOP -->
+  <div class="diag-desktop">
+    <div class="sys-label reveal"><span class="dot dot-amber"></span>DIAGNÓSTICO GRATUITO</div>
+    <h2 class="h3 reveal">Proponho para você um diagnóstico gratuito para entendermos em qual fase você está com problema hoje.</h2>
+    <div class="diag-grid-desktop reveal">
+      <div class="diag-card-desktop">
+        <span class="diag-card-icon">📍</span>
+        <span class="diag-card-num">01</span>
+        <span class="diag-card-text">Se o dinheiro foi investido onde teu público não está</span>
+      </div>
+      <div class="diag-card-desktop">
+        <span class="diag-card-icon">🗣</span>
+        <span class="diag-card-num">02</span>
+        <span class="diag-card-text">Se você fala igual ao concorrente e o cliente só compara preço</span>
+      </div>
+      <div class="diag-card-desktop">
+        <span class="diag-card-icon">📱</span>
+        <span class="diag-card-num">03</span>
+        <span class="diag-card-text">Se Instagram, Google e site afastam ou atraem clientes</span>
+      </div>
+      <div class="diag-card-desktop">
+        <span class="diag-card-icon">🎯</span>
+        <span class="diag-card-num">04</span>
+        <span class="diag-card-text">Se o tráfego estava orientado a lead qualificado ou poluído</span>
+      </div>
+      <div class="diag-card-desktop">
+        <span class="diag-card-icon">⚡</span>
+        <span class="diag-card-num">05</span>
+        <span class="diag-card-text">Se o atendimento é rápido, com qualidade e orientado a conversão</span>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="btn-wrap reveal">
@@ -336,19 +721,18 @@ body::after {
 
 <span class="sep"></span>
 
-<!-- NÃO -->
+<!-- ══════════ NÃO / SIM ══════════ -->
+<!-- MOBILE: empilhado -->
 <div class="nao-section" id="nao">
   <div class="nao-inner">
     <div class="sys-label reveal"><span class="dot"></span>FILTRO DE ACESSO</div>
-    <h2 class="h2 reveal" style="margin-bottom:28px;">Esse diagnóstico<br><em style="font-style:italic;color:rgba(238,240,242,.3);">não é pra todo mundo.</em></h2>
+    <h2 class="h2 reveal" style="margin-bottom:28px;">Esse diagnóstico<br><em style="color:rgba(238,240,242,.3);">não é pra todo mundo.</em></h2>
     <div class="nao-item reveal"><span class="nao-x">✗</span><span>Quem quer postar por postar e acha que volume de conteúdo substitui estratégia</span></div>
     <div class="nao-item reveal"><span class="nao-x">✗</span><span>Quem coloca uma campanha no ar e nunca mais aparece pra gravar um anúncio em vídeo</span></div>
     <div class="nao-item reveal"><span class="nao-x">✗</span><span>Quem acha que o lead vai vir de mão beijada, louco pra comprar, sem nenhum esforço do lado comercial</span></div>
     <p class="nao-stamp reveal">NÃO.</p>
   </div>
 </div>
-
-<!-- SIM -->
 <div class="sim-section">
   <div class="sim-inner">
     <div class="sys-label reveal"><span class="dot dot-green"></span>PERFIL COMPATÍVEL</div>
@@ -358,6 +742,22 @@ body::after {
     <div class="sim-item reveal"><span class="sim-check">✓</span><span>Você já desanimou do tráfego pago, mas sabe no fundo que funciona. Afinal, seu concorrente cresceu com isso. Por que você não?</span></div>
   </div>
 </div>
+
+<!-- DESKTOP: lado a lado via wrapper -->
+<style>
+@media (min-width:900px) {
+  .nao-sim-wrap { display:contents; }
+  .nao-section,
+  .sim-section { display:block; }
+  /* container que força lado a lado */
+  .nao-sim-container {
+    display:grid; grid-template-columns:1fr 1fr;
+    max-width:100%;
+  }
+  .nao-sim-container .nao-section,
+  .nao-sim-container .sim-section { border-top:none; }
+}
+</style>
 
 <span class="sep sep-green"></span>
 
@@ -405,8 +805,37 @@ const cardObs = new IntersectionObserver(entries => {
     if(e.isIntersecting) e.target.classList.add('active');
     else e.target.classList.remove('active');
   });
-}, { threshold:0.5, rootMargin:'-20% 0px -20% 0px' });
+}, { threshold:0.4, rootMargin:'-15% 0px -15% 0px' });
 document.querySelectorAll('.problema-card').forEach(el => cardObs.observe(el));
+
+// anima barras do hero dashboard
+const dashObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting) {
+      e.target.querySelectorAll('.hd-bar').forEach(b => {
+        setTimeout(() => b.style.width = b.dataset.w + '%', 300);
+      });
+    }
+  });
+}, { threshold:0.3 });
+document.querySelectorAll('.hero-dashboard').forEach(el => dashObs.observe(el));
+
+// NÃO/SIM lado a lado no desktop
+function wrapNaoSim() {
+  if(window.innerWidth >= 900) {
+    const nao = document.querySelector('.nao-section');
+    const sim = document.querySelector('.sim-section');
+    if(nao && sim && !nao.parentElement.classList.contains('nao-sim-container')) {
+      const wrap = document.createElement('div');
+      wrap.className = 'nao-sim-container';
+      nao.parentNode.insertBefore(wrap, nao);
+      wrap.appendChild(nao);
+      wrap.appendChild(sim);
+    }
+  }
+}
+wrapNaoSim();
+window.addEventListener('resize', wrapNaoSim);
 </script>
 </body>
 </html>
