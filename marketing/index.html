@@ -185,12 +185,13 @@ body::after {
 
 /* destaque "quem paga a conta" */
 .paga-conta {
-  display:inline-block;
-  font-family:var(--serif); font-size:clamp(22px,5.5vw,34px); font-weight:900;
-  line-height:1.2; margin-top:20px;
-  padding:16px 20px;
+  display:block;
+  font-family:var(--serif); font-size:clamp(26px,6.5vw,42px); font-weight:900;
+  line-height:1.2; margin-top:24px;
+  padding:20px 24px;
   border:2px solid var(--red);
   color:var(--red);
+  text-align:center;
   position:relative;
 }
 .paga-conta::before {
@@ -207,12 +208,21 @@ body::after {
   border-bottom:1px solid var(--border);
   max-width:var(--max); margin:0 auto;
   position:relative;
-  transition:box-shadow .25s;
+  transition:box-shadow .35s ease, background .35s ease;
   cursor:default;
 }
 .problema-card:last-of-type { border-bottom:none; }
+
+/* destaque ao entrar no centro da tela */
+.problema-card.active {
+  box-shadow:inset 0 0 0 2px var(--red), 0 0 24px rgba(200,40,26,.18);
+  background: rgba(200,40,26,.03);
+}
+.problema-card.active .problema-num { opacity:.35; }
+
+/* hover mantém brilho */
 .problema-card:hover {
-  box-shadow:inset 0 0 0 2px var(--red), 0 0 18px rgba(200,40,26,.15);
+  box-shadow:inset 0 0 0 2px var(--red), 0 0 28px rgba(200,40,26,.22);
 }
 .problema-num {
   font-family:var(--mono); font-size:42px; font-weight:500;
@@ -267,80 +277,67 @@ body::after {
 .bt { font-size:17px; line-height:1.6; color:#d4cdc5; }
 
 /* ═══════════════════
-   NÃO É PRA TODO MUNDO — vermelho piscando
+   NÃO É PRA TODO MUNDO
 ═══════════════════ */
 .nao-section {
-  background:var(--red); padding:52px 20px;
-  position:relative; overflow:hidden;
+  background: var(--ink);
+  padding: 52px 20px;
+  position: relative; overflow: hidden;
+  border-top: 3px solid var(--red);
 }
 .nao-section::before {
   content:'';
-  position:absolute; top:-40%; right:-20%;
-  width:70%; height:180%;
-  background:rgba(255,255,255,.04); transform:rotate(-12deg); pointer-events:none;
+  position:absolute; top:-10%; right:-15%;
+  width:60%; height:130%;
+  background:linear-gradient(135deg, transparent 45%, rgba(200,40,26,.05) 45%);
+  pointer-events:none;
 }
-
-@keyframes blink-border {
-  0%,100% { box-shadow: 0 0 0 3px rgba(255,255,255,.9), 0 0 20px rgba(255,255,255,.4); }
-  50%      { box-shadow: 0 0 0 3px rgba(255,255,255,.2), 0 0 6px rgba(255,255,255,.1); }
-}
-.nao-badge {
-  display:block;
-  font-family:var(--mono); font-size:clamp(16px,4vw,22px); font-weight:500;
-  letter-spacing:.12em; text-transform:uppercase;
-  color:white; text-align:center;
-  padding:20px 24px; margin-bottom:28px;
-  border:2px solid white;
-  animation:blink-border 1.4s ease-in-out infinite;
-}
+.nao-inner { max-width:var(--max); margin:0 auto; position:relative; z-index:1; }
 
 .nao-item {
-  display:flex; align-items:flex-start; gap:14px;
-  padding:14px 0; border-bottom:1px solid rgba(255,255,255,.15);
-  color:rgba(255,255,255,.85); font-size:16px; line-height:1.5;
+  display:flex; align-items:flex-start; gap:16px;
+  padding:16px 0; border-bottom:1px solid rgba(255,255,255,.08);
+  color:rgba(255,255,255,.75); font-size:17px; line-height:1.6;
 }
-.nao-item:last-child { border-bottom:none; }
+.nao-item:last-of-type { border-bottom:none; }
 .nao-x {
-  font-family:var(--mono); font-size:16px; font-weight:500;
-  color:rgba(255,255,255,.4); flex-shrink:0; padding-top:2px;
+  font-family:var(--mono); font-size:13px;
+  color:var(--red); flex-shrink:0; padding-top:3px;
+}
+
+.nao-stamp {
+  font-family:var(--serif);
+  font-size:clamp(52px,16vw,110px);
+  font-weight:900; font-style:italic;
+  color:var(--red); line-height:1;
+  margin-top:32px; letter-spacing:-.02em;
 }
 
 /* ═══════════════════
-   É PRA ESSE DIAGNÓSTICO — verde
+   SIM — É PRA VOCÊ
 ═══════════════════ */
 .sim-section {
-  background:var(--green); padding:52px 20px;
-  position:relative; overflow:hidden;
+  background: var(--green);
+  padding: 52px 20px;
+  position: relative; overflow: hidden;
+  border-top: 3px solid rgba(255,255,255,.2);
 }
 .sim-section::before {
-  content:''; position:absolute; inset:0;
-  background-image:radial-gradient(circle, rgba(255,255,255,.06) 1px, transparent 1px);
+  content:'';
+  position:absolute; inset:0;
+  background-image:radial-gradient(circle, rgba(255,255,255,.05) 1px, transparent 1px);
   background-size:24px 24px; pointer-events:none;
 }
-
-@keyframes blink-green {
-  0%,100% { box-shadow:0 0 0 3px rgba(255,255,255,.9), 0 0 20px rgba(255,255,255,.3); }
-  50%      { box-shadow:0 0 0 3px rgba(255,255,255,.2), 0 0 6px rgba(255,255,255,.05); }
-}
-.sim-badge {
-  display:block;
-  font-family:var(--mono); font-size:clamp(14px,3.5vw,19px); font-weight:500;
-  letter-spacing:.1em; text-transform:uppercase;
-  color:white; text-align:center;
-  padding:20px 24px; margin-bottom:28px;
-  border:2px solid white;
-  animation:blink-green 1.4s ease-in-out infinite;
-  line-height:1.4;
-}
+.sim-inner { max-width:var(--max); margin:0 auto; position:relative; z-index:1; }
 
 .sim-item {
-  display:flex; align-items:flex-start; gap:14px;
-  padding:14px 0; border-bottom:1px solid rgba(255,255,255,.15);
-  color:rgba(255,255,255,.92); font-size:16px; line-height:1.5;
+  display:flex; align-items:flex-start; gap:16px;
+  padding:16px 0; border-bottom:1px solid rgba(255,255,255,.15);
+  color:rgba(255,255,255,.92); font-size:17px; line-height:1.6;
 }
 .sim-item:last-child { border-bottom:none; }
 .sim-check {
-  font-family:var(--mono); font-size:14px;
+  font-family:var(--mono); font-size:13px;
   color:rgba(255,255,255,.7); flex-shrink:0; padding-top:3px;
 }
 
@@ -426,23 +423,6 @@ body::after {
     </p>
   </div>
 
-  <div class="tension-meter reveal" id="tension-meter">
-    <div class="tm-row">
-      <span class="tm-label">Dinheiro investido</span>
-      <div class="tm-bar-wrap"><div class="tm-bar" data-w="92" style="background:var(--red);"></div></div>
-      <span class="tm-val" style="color:var(--red);">92%</span>
-    </div>
-    <div class="tm-row">
-      <span class="tm-label">Resultado obtido</span>
-      <div class="tm-bar-wrap"><div class="tm-bar" data-w="11" style="background:#888;"></div></div>
-      <span class="tm-val" style="color:#888;">11%</span>
-    </div>
-    <div class="tm-row">
-      <span class="tm-label">Causa identificada</span>
-      <div class="tm-bar-wrap"><div class="tm-bar" data-w="0" style="background:var(--amber);"></div></div>
-      <span class="tm-val" style="color:var(--amber);">0%</span>
-    </div>
-  </div>
 
   <div class="wrap hero-cta reveal">
     <a href="#problema" class="btn btn-dark">→ Quero entender o que travou meu resultado</a>
@@ -457,7 +437,7 @@ body::after {
     <span class="label reveal">A verdade que ninguém diz</span>
     <h2 class="h2 reveal">Existem agências ruins.<br>Você provavelmente<br><span class="red-em">já passou por uma.</span></h2>
     <p class="body reveal">O setor cresceu rápido. E junto vieram muitos amadores. Gente que sobe anúncio sem estratégia, não acompanha dados e não entende processo de venda.</p>
-    <p class="paga-conta reveal">No final, quem paga<br>a conta é você.</p>
+    <p class="paga-conta reveal">No final, quem paga a conta é você.</p>
   </div>
   <div class="btn-wrap reveal">
     <a href="#virada" class="btn btn-dark">→ Ver o que está causando isso</a>
@@ -470,45 +450,45 @@ body::after {
 <div class="section section-dark" id="virada">
   <div class="wrap">
     <span class="label label-amber reveal">Mas aqui está o ponto que ninguém fala</span>
-    <h2 class="h2 reveal" style="color:var(--paper);">Mesmo quando a agência erra,<br>outros fatores destroem<br><span style="color:var(--amber);font-style:italic;">o resultado.</span></h2>
+    <h2 class="h2 reveal" style="color:var(--paper);">Mesmo quando a agência erra, outros fatores destroem <span style="color:var(--amber);font-style:italic;">o resultado.</span></h2>
   </div>
 </div>
 
-<!-- 6 PROBLEMA CARDS — nova ordem, hover com borda vermelha brilhante -->
+<!-- 6 PROBLEMA CARDS -->
 <div class="problema-card reveal">
   <div class="problema-num">01</div>
-  <div class="problema-title">Tempo de resposta<br>ao lead</div>
+  <div class="problema-title">Muita demora para atender o lead que chega</div>
   <div class="problema-desc">Lead que espera mais de 5 minutos perde o calor. O concorrente que responde rápido fecha a venda que era sua.</div>
 </div>
 
 <div class="problema-card reveal">
   <div class="problema-num">02</div>
-  <div class="problema-title">Tráfego orientado a<br>lead qualificado</div>
-  <div class="problema-desc">Se o tráfego é genérico, só vem contato aleatório. Sem segmentação, você paga pra atrair quem nunca vai comprar.</div>
+  <div class="problema-title">Anúncio só atraindo leads curiosos</div>
+  <div class="problema-desc">Você sabe o porquê? Porque seu anúncio foi tratado como ímã. Mas ele deve ser um filtro. E existe uma lógica pra isso.</div>
 </div>
 
 <div class="problema-card reveal">
   <div class="problema-num">03</div>
-  <div class="problema-title">Processo<br>comercial</div>
-  <div class="problema-desc">Tráfego sem funil de vendas é desperdício puro. O lead chega, ninguém sabe o que fazer com ele.</div>
+  <div class="problema-title">Processo comercial que não se adequa à necessidade do público</div>
+  <div class="problema-desc">Tráfego sem funil de vendas é desperdício puro. O lead chega e o processo não está preparado pra ele.</div>
 </div>
 
 <div class="problema-card reveal">
   <div class="problema-num">04</div>
-  <div class="problema-title">Acompanhamento<br>dos números</div>
+  <div class="problema-title">Falta de acompanhamento dos números do negócio</div>
   <div class="problema-desc">Sem dados não existe decisão. Você repete o que não funciona sem saber que não funciona.</div>
 </div>
 
 <div class="problema-card reveal">
   <div class="problema-num">05</div>
-  <div class="problema-title">Clareza<br>da oferta</div>
-  <div class="problema-desc">Se o cliente não entende em 3 segundos o que você vende e pra quem, ele fecha a página. Simples assim.</div>
+  <div class="problema-title">Oferta igual a de todo mundo</div>
+  <div class="problema-desc">Se o cliente não enxerga diferença entre você e o concorrente, ele decide pelo preço. E nessa guerra, ninguém ganha.</div>
 </div>
 
 <div class="problema-card reveal">
   <div class="problema-num">06</div>
-  <div class="problema-title">Demanda digital</div>
-  <div class="problema-desc">Já parou pra ver se o seu público está onde você está investindo tempo e dinheiro? Plataforma errada = resultado zero.</div>
+  <div class="problema-title">Mercado saturado</div>
+  <div class="problema-desc">Já parou pra ver se o seu público está onde você está investindo tempo e dinheiro? Plataforma errada, resultado zero.</div>
 </div>
 
 <div class="btn-wrap reveal">
@@ -520,7 +500,7 @@ body::after {
 <!-- ══════════ FILTRO 1 ══════════ -->
 <div class="filtro-block reveal">
   <div class="filtro-inner">
-    <p class="filtro-text">Se você acredita que marketing resolve tudo sozinho, isso aqui não vai fazer sentido pra você.</p>
+    <p class="filtro-text">Se você acredita que só o marketing resolve tudo sozinho, isso aqui não vai fazer sentido pra você.</p>
   </div>
 </div>
 
@@ -544,7 +524,7 @@ body::after {
     <span class="big-stat-label reveal">reais em campanhas acompanhadas</span>
     <p class="body reveal">Depois de acompanhar mais de <strong>R$1.700.000 investidos</strong>, um padrão ficou claro:</p>
     <p class="body reveal">Negócios que crescem seguem uma lógica. Não é sorte. Não é tentativa. <strong>É estrutura.</strong></p>
-    <p class="body reveal" style="margin-top:12px;">É o que a gente chama de <strong>Método Demanda Contínua</strong> — cinco etapas que cobrem desde a identificação da demanda até a conversão do lead, sem deixar gap no processo.</p>
+    <p class="body reveal" style="margin-top:12px;">É o que a gente chama de <strong>Método Demanda Contínua</strong>, cinco etapas que cobrem desde a identificação da demanda até a conversão do lead, sem deixar gap no processo.</p>
   </div>
 </div>
 
@@ -575,44 +555,44 @@ body::after {
 
 <!-- ══════════ NÃO É PRA TODO MUNDO ══════════ -->
 <div class="nao-section" id="nao">
-  <div style="max-width:var(--max); margin:0 auto; position:relative; z-index:1;">
-    <span class="nao-badge reveal">⚠ Esse diagnóstico não é pra todo mundo</span>
+  <div class="nao-inner">
+    <span class="label label-white reveal">Atenção</span>
+    <h2 class="h2 reveal" style="color:white; margin-bottom:28px;">Esse diagnóstico<br><em style="font-style:italic; color:rgba(255,255,255,.5);">não é pra todo mundo.</em></h2>
 
     <div class="nao-item reveal">
       <span class="nao-x">✗</span>
-      <span>Também não é pra quem quer postar por postar</span>
+      <span>Quem quer postar por postar e acha que volume de conteúdo substitui estratégia</span>
     </div>
     <div class="nao-item reveal">
       <span class="nao-x">✗</span>
-      <span>Colocar uma campanha e nunca mais gravar um anúncio em vídeo</span>
+      <span>Quem coloca uma campanha no ar e nunca mais aparece pra gravar um anúncio em vídeo</span>
     </div>
     <div class="nao-item reveal">
       <span class="nao-x">✗</span>
-      <span>Achar que o lead vai vir de mão beijada louco pra comprar de você</span>
+      <span>Quem acha que o lead vai vir de mão beijada, louco pra comprar, sem nenhum esforço do lado comercial</span>
     </div>
 
-    <div style="margin-top:32px; text-align:center;">
-      <span style="font-family:var(--mono); font-size:clamp(28px,10vw,64px); font-weight:500; color:white; letter-spacing:.1em; display:block; line-height:1;">NÃO.</span>
-    </div>
+    <p class="nao-stamp reveal">NÃO.</p>
   </div>
 </div>
 
 <!-- ══════════ É PRA ESSE DIAGNÓSTICO ══════════ -->
 <div class="sim-section">
-  <div style="max-width:var(--max); margin:0 auto; position:relative; z-index:1;">
-    <span class="sim-badge reveal">✓ Esse diagnóstico é para</span>
+  <div class="sim-inner">
+    <span class="label reveal" style="color:rgba(255,255,255,.5);">Mas é pra você se</span>
+    <h2 class="h2 reveal" style="color:white; margin-bottom:28px;">Esse diagnóstico<br><em style="font-style:italic; color:rgba(255,255,255,.7);">é pra quem está pronto.</em></h2>
 
     <div class="sim-item reveal">
-      <span class="sim-check">→</span>
-      <span>Quem tá cansado de agência que só faz postzinho e quer resultado</span>
+      <span class="sim-check">✓</span>
+      <span>Você está cansado de agência que só entrega postzinho e nunca fala de resultado real</span>
     </div>
     <div class="sim-item reveal">
-      <span class="sim-check">→</span>
-      <span>Quem sente que agência não olha para resultado</span>
+      <span class="sim-check">✓</span>
+      <span>Você sente que o dinheiro foi investido, mas ninguém soube te dizer exatamente onde foi parar</span>
     </div>
     <div class="sim-item reveal">
-      <span class="sim-check">→</span>
-      <span>Quem já desanimou do tráfego pago, mas sabe que dá resultado — teu concorrente teve, não é mesmo?</span>
+      <span class="sim-check">✓</span>
+      <span>Você já desanimou do tráfego pago, mas sabe no fundo que funciona. Afinal, seu concorrente cresceu com isso. Por que você não?</span>
     </div>
   </div>
 </div>
@@ -670,6 +650,22 @@ const obs = new IntersectionObserver(entries => {
 }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
 
 document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+// problema-cards: acende borda vermelha quando no centro da tela
+const cardObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('active');
+    } else {
+      e.target.classList.remove('active');
+    }
+  });
+}, {
+  threshold: 0.5,
+  rootMargin: '-20% 0px -20% 0px'   // só dispara quando card está no centro ~60% da viewport
+});
+
+document.querySelectorAll('.problema-card').forEach(el => cardObs.observe(el));
 </script>
 </body>
 </html>
