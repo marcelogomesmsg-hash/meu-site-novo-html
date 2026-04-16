@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diagnóstico Gratuito — Efficiency On</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=IBM+Plex+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0e0e0e;
+  --paper: #f4efe5;
+  --red: #c8281a;
+  --red-dark: #8b1a10;
+  --green: #1a7a3c;
+  --green-light: #e8f5ee;
+  --amber: #d97706;
+  --dim: #6b6460;
+  --border: rgba(14,14,14,0.12);
+  --serif: 'Playfair Display', Georgia, serif;
+  --mono: 'IBM Plex Mono', monospace;
+  --sans: 'DM Sans', sans-serif;
+  --max: 640px;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+body::after {
+  content:'';
+  position:fixed; inset:0;
+  pointer-events:none; z-index:200; opacity:.45;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23g)' opacity='.05'/%3E%3C/svg%3E");
+}
+
+.progress-bar {
+  position:fixed; top:0; left:0;
+  height:3px; background:var(--red); width:0%;
+  z-index:999; transition:width .1s linear;
+}
+
+.wrap { max-width:var(--max); margin:0 auto; padding:0 20px; }
+
+/* ── BOTÕES — todos com borda em destaque ── */
+.btn {
+  display:block; max-width:480px; margin:0 auto;
+  text-align:center;
+  font-family:var(--mono); font-size:12px; font-weight:500;
+  letter-spacing:.14em; text-transform:uppercase;
+  text-decoration:none; padding:20px 32px;
+  cursor:pointer;
+  border:2px solid transparent;
+  box-shadow: 0 0 0 2px currentColor;
+  transition:background .18s, color .18s, box-shadow .18s;
+  position:relative;
+}
+
+/* borda dupla de destaque em todos os botões */
+.btn::before {
+  content:'';
+  position:absolute; inset:-5px;
+  border:1px solid currentColor;
+  opacity:.25;
+  pointer-events:none;
+}
+
+.btn-dark {
+  background:var(--ink); color:var(--paper);
+  box-shadow:0 0 0 2px var(--ink);
+}
+.btn-dark::before { border-color:var(--ink); }
+.btn-dark:hover { background:#2a2522; }
+
+.btn-red {
+  background:var(--red); color:white;
+  box-shadow:0 0 0 2px var(--red);
+}
+.btn-red::before { border-color:var(--red); }
+.btn-red:hover { background:var(--red-dark); box-shadow:0 0 0 2px var(--red-dark); }
+
+.btn-white {
+  background:white; color:var(--red);
+  box-shadow:0 0 0 2px white;
+}
+.btn-white::before { border-color:white; }
+.btn-white:hover { background:transparent; color:white; }
+
+.btn-wrap { max-width:var(--max); margin:0 auto; padding:32px 20px; }
+
+.sep { display:block; height:3px; background:var(--red); opacity:.18; }
+
+/* ── TYPOGRAPHY ── */
+.label {
+  font-family:var(--mono); font-size:10px; letter-spacing:.25em;
+  text-transform:uppercase; display:block; margin-bottom:16px; color:var(--dim);
+}
+.label-amber { color:var(--amber); }
+.label-white { color:rgba(255,255,255,.45); }
+
+.h1 { font-family:var(--serif); font-size:clamp(40px,9vw,64px); font-weight:900; line-height:1.05; letter-spacing:-.025em; }
+.h2 { font-family:var(--serif); font-size:clamp(30px,7vw,50px); font-weight:900; line-height:1.08; letter-spacing:-.02em; }
+.h3 { font-family:var(--serif); font-size:clamp(22px,5vw,34px); font-weight:700; line-height:1.2; }
+
+.red-em { color:var(--red); font-style:italic; }
+
+.body     { font-size:17px; line-height:1.75; margin-top:14px; }
+.body-dim { color:var(--dim); }
+
+.section      { padding:52px 0 44px; }
+.section-dark { background:var(--ink); color:var(--paper); }
+.section-red  { background:var(--red); color:white; }
+.section-mid  { background:#1a1612; color:var(--paper); }
+
+/* ── REVEAL ── */
+.reveal { opacity:0; transform:translateY(22px); transition:opacity .65s ease,transform .65s ease; }
+.reveal.visible { opacity:1; transform:none; }
+
+/* ═══════════════════
+   HERO
+═══════════════════ */
+.hero {
+  padding:36px 0 0;
+  min-height:100svh;
+  display:flex; flex-direction:column; justify-content:center;
+  position:relative; overflow:hidden;
+}
+.hero::before {
+  content:'';
+  position:absolute; top:-10%; right:-15%;
+  width:60%; height:130%;
+  background:linear-gradient(135deg, transparent 45%, rgba(200,40,26,.06) 45%);
+  pointer-events:none;
+}
+.hero-ghost {
+  position:absolute; bottom:-20px; left:-8px;
+  font-family:var(--serif); font-size:clamp(80px,25vw,200px);
+  font-weight:900; font-style:italic;
+  color:var(--red); opacity:.04; line-height:1;
+  pointer-events:none; white-space:nowrap; user-select:none; letter-spacing:-.04em;
+}
+.hero-corner {
+  position:absolute; top:0; right:0;
+  width:0; height:0;
+  border-top:80px solid var(--red); border-left:80px solid transparent;
+  opacity:.18;
+}
+.hero-sub {
+  margin-top:20px; font-size:18px; font-weight:300;
+  color:var(--dim); line-height:1.6;
+  border-left:3px solid var(--red); padding-left:14px;
+}
+.hero-cta { margin-top:28px; padding-bottom:48px; }
+
+/* tension meter */
+.tension-meter { padding:0 20px; max-width:var(--max); margin:32px auto 0; }
+.tm-row {
+  display:flex; align-items:center; gap:10px;
+  font-family:var(--mono); font-size:9px;
+  letter-spacing:.15em; text-transform:uppercase;
+  color:var(--dim); padding:5px 0;
+}
+.tm-label { width:115px; flex-shrink:0; }
+.tm-bar-wrap { flex:1; height:6px; background:rgba(14,14,14,.08); overflow:hidden; }
+.tm-bar { height:100%; width:0; transition:width 1.4s cubic-bezier(.16,1,.3,1); }
+.tm-val { font-family:var(--mono); font-size:9px; width:28px; text-align:right; }
+
+/* ═══════════════════
+   LEAD
+═══════════════════ */
+.lead-section { position:relative; overflow:hidden; }
+.lead-section::before {
+  content:''; position:absolute; inset:0;
+  background-image:radial-gradient(circle, rgba(200,40,26,.08) 1px, transparent 1px);
+  background-size:28px 28px; pointer-events:none;
+}
+
+/* destaque "quem paga a conta" */
+.paga-conta {
+  display:block;
+  font-family:var(--serif); font-size:clamp(26px,6.5vw,42px); font-weight:900;
+  line-height:1.2; margin-top:24px;
+  padding:20px 24px;
+  border:2px solid var(--red);
+  color:var(--red);
+  text-align:center;
+  position:relative;
+}
+.paga-conta::before {
+  content:'';
+  position:absolute; inset:-5px;
+  border:1px solid var(--red); opacity:.3;
+}
+
+/* ═══════════════════
+   PROBLEMA CARDS — virada
+═══════════════════ */
+.problema-card {
+  padding:32px 20px 28px;
+  border-bottom:1px solid var(--border);
+  max-width:var(--max); margin:0 auto;
+  position:relative;
+  transition:box-shadow .35s ease, background .35s ease;
+  cursor:default;
+}
+.problema-card:last-of-type { border-bottom:none; }
+
+/* destaque ao entrar no centro da tela */
+.problema-card.active {
+  box-shadow:inset 0 0 0 2px var(--red), 0 0 24px rgba(200,40,26,.18);
+  background: rgba(200,40,26,.03);
+}
+.problema-card.active .problema-num { opacity:.35; }
+
+/* hover mantém brilho */
+.problema-card:hover {
+  box-shadow:inset 0 0 0 2px var(--red), 0 0 28px rgba(200,40,26,.22);
+}
+.problema-num {
+  font-family:var(--mono); font-size:42px; font-weight:500;
+  color:var(--red); opacity:.13; line-height:1; margin-bottom:-6px;
+}
+.problema-title {
+  font-family:var(--serif); font-size:clamp(24px,6vw,38px);
+  font-weight:900; line-height:1.1; margin-bottom:10px;
+}
+.problema-desc { font-size:16px; color:var(--dim); line-height:1.65; }
+
+/* ═══════════════════
+   FILTRO
+═══════════════════ */
+.filtro-block { background:#fff8f7; border-left:6px solid var(--red); padding:36px 20px; }
+.filtro-inner { max-width:var(--max); margin:0 auto; }
+.filtro-text {
+  font-family:var(--serif); font-size:clamp(20px,5vw,30px);
+  font-style:italic; line-height:1.4; color:var(--red);
+}
+
+/* ═══════════════════
+   AUTORIDADE
+═══════════════════ */
+.autoridade-section { position:relative; overflow:hidden; }
+.autoridade-section::before {
+  content:''; position:absolute; inset:0;
+  background-image:repeating-linear-gradient(
+    0deg, rgba(14,14,14,.04) 0, rgba(14,14,14,.04) 1px, transparent 1px, transparent 32px
+  );
+  pointer-events:none;
+}
+.big-stat {
+  font-family:var(--serif); font-size:clamp(72px,22vw,130px);
+  font-weight:900; line-height:.9; color:var(--red);
+  letter-spacing:-.04em; display:block; margin-bottom:6px;
+}
+.big-stat-label {
+  font-family:var(--mono); font-size:11px; letter-spacing:.2em;
+  text-transform:uppercase; color:var(--dim); display:block; margin-bottom:24px;
+}
+
+/* ═══════════════════
+   DIAGNÓSTICO BULLETS
+═══════════════════ */
+.bullet-row {
+  display:flex; gap:16px; padding:20px 0;
+  border-bottom:1px solid rgba(255,255,255,.08); align-items:flex-start;
+}
+.bullet-row:last-child { border-bottom:none; }
+.bn { font-family:var(--mono); font-size:11px; color:var(--amber); padding-top:4px; flex-shrink:0; width:24px; }
+.bt { font-size:17px; line-height:1.6; color:#d4cdc5; }
+
+/* ═══════════════════
+   NÃO É PRA TODO MUNDO
+═══════════════════ */
+.nao-section {
+  background: var(--ink);
+  padding: 52px 20px;
+  position: relative; overflow: hidden;
+  border-top: 3px solid var(--red);
+}
+.nao-section::before {
+  content:'';
+  position:absolute; top:-10%; right:-15%;
+  width:60%; height:130%;
+  background:linear-gradient(135deg, transparent 45%, rgba(200,40,26,.05) 45%);
+  pointer-events:none;
+}
+.nao-inner { max-width:var(--max); margin:0 auto; position:relative; z-index:1; }
+
+.nao-item {
+  display:flex; align-items:flex-start; gap:16px;
+  padding:16px 0; border-bottom:1px solid rgba(255,255,255,.08);
+  color:rgba(255,255,255,.75); font-size:17px; line-height:1.6;
+}
+.nao-item:last-of-type { border-bottom:none; }
+.nao-x {
+  font-family:var(--mono); font-size:13px;
+  color:var(--red); flex-shrink:0; padding-top:3px;
+}
+
+.nao-stamp {
+  font-family:var(--serif);
+  font-size:clamp(52px,16vw,110px);
+  font-weight:900; font-style:italic;
+  color:var(--red); line-height:1;
+  margin-top:32px; letter-spacing:-.02em;
+}
+
+/* ═══════════════════
+   SIM — É PRA VOCÊ
+═══════════════════ */
+.sim-section {
+  background: var(--green);
+  padding: 52px 20px;
+  position: relative; overflow: hidden;
+  border-top: 3px solid rgba(255,255,255,.2);
+}
+.sim-section::before {
+  content:'';
+  position:absolute; inset:0;
+  background-image:radial-gradient(circle, rgba(255,255,255,.05) 1px, transparent 1px);
+  background-size:24px 24px; pointer-events:none;
+}
+.sim-inner { max-width:var(--max); margin:0 auto; position:relative; z-index:1; }
+
+.sim-item {
+  display:flex; align-items:flex-start; gap:16px;
+  padding:16px 0; border-bottom:1px solid rgba(255,255,255,.15);
+  color:rgba(255,255,255,.92); font-size:17px; line-height:1.6;
+}
+.sim-item:last-child { border-bottom:none; }
+.sim-check {
+  font-family:var(--mono); font-size:13px;
+  color:rgba(255,255,255,.7); flex-shrink:0; padding-top:3px;
+}
+
+/* ═══════════════════
+   QUOTE
+═══════════════════ */
+.quote-block { background:var(--ink); padding:56px 20px; position:relative; overflow:hidden; }
+.quote-block::before {
+  content:'\201C';
+  position:absolute; top:-40px; left:10px;
+  font-family:var(--serif); font-size:300px; font-weight:900;
+  color:var(--red); opacity:.05; line-height:1; pointer-events:none;
+}
+.quote-inner { max-width:var(--max); margin:0 auto; text-align:center; }
+.quote-text {
+  font-family:var(--serif); font-size:clamp(22px,5.5vw,36px);
+  font-style:italic; color:var(--paper); line-height:1.35; margin-bottom:16px;
+}
+.quote-line2 {
+  font-family:var(--serif); font-size:clamp(18px,4vw,26px);
+  font-weight:700; color:var(--red);
+}
+
+/* ═══════════════════
+   RESULT PUNCH
+═══════════════════ */
+.result-punch {
+  background:var(--ink); padding:40px 20px; text-align:center;
+  position:relative; overflow:hidden;
+}
+.result-punch::before {
+  content:'"';
+  position:absolute; top:-30px; left:50%; transform:translateX(-50%);
+  font-family:var(--serif); font-size:280px; font-weight:900;
+  color:var(--red); opacity:.04; line-height:1; pointer-events:none;
+}
+
+/* ═══════════════════
+   CTA FINAL
+═══════════════════ */
+.cta-final-section {
+  background:linear-gradient(160deg, var(--red) 60%, var(--red-dark) 100%);
+  padding:60px 20px; text-align:center;
+  position:relative; overflow:hidden;
+}
+.cta-final-section::before {
+  content:''; position:absolute; top:-40%; right:-20%;
+  width:70%; height:180%;
+  background:rgba(255,255,255,.04); transform:rotate(-12deg); pointer-events:none;
+}
+.cta-final-section::after {
+  content:''; position:absolute; bottom:-20%; left:-10%;
+  width:50%; height:100%;
+  background:rgba(0,0,0,.06); transform:rotate(8deg); pointer-events:none;
+}
+
+.fechamento { padding:48px 20px 64px; text-align:center; }
+.fecha-body { font-size:17px; color:var(--dim); line-height:1.7; margin-bottom:16px; }
+.fecha-final {
+  font-family:var(--serif); font-size:clamp(20px,5vw,28px);
+  font-style:italic; font-weight:700; color:var(--ink);
+}
+
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+
+<!-- ══════════ HERO ══════════ -->
+<div class="hero">
+  <div class="hero-ghost">erro</div>
+  <div class="hero-corner"></div>
+
+  <div class="wrap">
+    <span class="label reveal">Efficiency On</span>
+    <h1 class="h1 reveal">
+      Você já investiu<br>em marketing...<br>
+      <span class="red-em">e o dinheiro foi<br>embora sem resultado?</span>
+    </h1>
+    <p class="hero-sub reveal">
+      Isso é mais comum do que parece. E quase sempre tem uma causa clara que ninguém te mostrou ainda.
+    </p>
+  </div>
+
+
+  <div class="wrap hero-cta reveal">
+    <a href="https://wa.me/5521982955678?text=Quero%20um%20diagn%C3%B3stico%20gratuito%20do%20meu%20marketing%20e%20vendas." target="_blank" class="btn btn-dark">Quero um diagnóstico gratuito do meu marketing e vendas</a>
+  </div>
+</div>
+
+<span class="sep"></span>
+
+<!-- ══════════ LEAD ══════════ -->
+<div class="lead-section section" id="problema">
+  <div class="wrap">
+    <span class="label reveal">A verdade que ninguém diz</span>
+    <h2 class="h2 reveal">Existem agências ruins.<br>Você provavelmente<br><span class="red-em">já passou por uma.</span></h2>
+    <p class="body reveal">O setor cresceu rápido. E junto vieram muitos amadores. Gente que sobe anúncio sem estratégia, não acompanha dados e não entende processo de venda.</p>
+    <p class="paga-conta reveal">No final, quem paga a conta é você.</p>
+  </div>
+  <div class="btn-wrap reveal">
+    <a href="https://wa.me/5521982955678?text=Quero%20um%20diagn%C3%B3stico%20gratuito%20do%20meu%20marketing%20e%20vendas." target="_blank" class="btn btn-dark">Quero um diagnóstico gratuito do meu marketing e vendas</a>
+  </div>
+</div>
+
+<span class="sep"></span>
+
+<!-- ══════════ VIRADA ══════════ -->
+<div class="section section-dark" id="virada">
+  <div class="wrap">
+    <span class="label label-amber reveal">Mas aqui está o ponto que ninguém fala</span>
+    <h2 class="h2 reveal" style="color:var(--paper);">Mesmo quando a agência erra, outros fatores destroem <span style="color:var(--amber);font-style:italic;">o resultado.</span></h2>
+  </div>
+</div>
+
+<!-- 6 PROBLEMA CARDS -->
+<div class="problema-card reveal">
+  <div class="problema-num">01</div>
+  <div class="problema-title">Muita demora para atender o lead que chega</div>
+  <div class="problema-desc">Lead que espera mais de 5 minutos perde o calor. O concorrente que responde rápido fecha a venda que era sua.</div>
+</div>
+
+<div class="problema-card reveal">
+  <div class="problema-num">02</div>
+  <div class="problema-title">Anúncio só atraindo leads curiosos</div>
+  <div class="problema-desc">Você sabe o porquê? Porque seu anúncio foi tratado como ímã. Mas ele deve ser um filtro. E existe uma lógica pra isso.</div>
+</div>
+
+<div class="problema-card reveal">
+  <div class="problema-num">03</div>
+  <div class="problema-title">Processo comercial que não se adequa à necessidade do público</div>
+  <div class="problema-desc">Tráfego sem funil de vendas é desperdício puro. O lead chega e o processo não está preparado pra ele.</div>
+</div>
+
+<div class="problema-card reveal">
+  <div class="problema-num">04</div>
+  <div class="problema-title">Falta de acompanhamento dos números do negócio</div>
+  <div class="problema-desc">Sem dados não existe decisão. Você repete o que não funciona sem saber que não funciona.</div>
+</div>
+
+<div class="problema-card reveal">
+  <div class="problema-num">05</div>
+  <div class="problema-title">Oferta igual a de todo mundo</div>
+  <div class="problema-desc">Se o cliente não enxerga diferença entre você e o concorrente, ele decide pelo preço. E nessa guerra, ninguém ganha.</div>
+</div>
+
+<div class="problema-card reveal">
+  <div class="problema-num">06</div>
+  <div class="problema-title">Mercado saturado</div>
+  <div class="problema-desc">Já parou pra ver se o seu público está onde você está investindo tempo e dinheiro? Plataforma errada, resultado zero.</div>
+</div>
+
+<div class="btn-wrap reveal">
+  <a href="https://wa.me/5521982955678?text=Quero%20um%20diagn%C3%B3stico%20gratuito%20do%20meu%20marketing%20e%20vendas." target="_blank" class="btn btn-dark">Quero um diagnóstico gratuito do meu marketing e vendas</a>
+</div>
+
+<span class="sep"></span>
+
+<!-- ══════════ FILTRO 1 ══════════ -->
+<div class="filtro-block reveal">
+  <div class="filtro-inner">
+    <p class="filtro-text">Se você acredita que só o marketing resolve tudo sozinho, isso aqui não vai fazer sentido pra você.</p>
+  </div>
+</div>
+
+<span class="sep"></span>
+
+<!-- ══════════ RESULTADO punchline ══════════ -->
+<div class="result-punch">
+  <div style="max-width:var(--max); margin:0 auto; position:relative; z-index:1;">
+    <p class="reveal" style="font-family:var(--serif); font-size:clamp(20px,5vw,30px); color:rgba(255,255,255,.9); line-height:1.4;">Parece que <em style="color:var(--red);">"marketing não funciona."</em></p>
+    <p class="body reveal" style="color:#a09890; margin-top:8px;">Na prática, o processo inteiro está desalinhado.</p>
+  </div>
+</div>
+
+<span class="sep"></span>
+
+<!-- ══════════ AUTORIDADE ══════════ -->
+<div class="autoridade-section section" id="autoridade">
+  <div class="wrap" style="position:relative; z-index:1;">
+    <span class="label reveal">Por que acreditar nisso</span>
+    <span class="big-stat reveal">1.7M</span>
+    <span class="big-stat-label reveal">reais em campanhas acompanhadas</span>
+    <p class="body reveal">Depois de acompanhar mais de <strong>R$1.700.000 investidos</strong>, um padrão ficou claro:</p>
+    <p class="body reveal">Negócios que crescem seguem uma lógica. Não é sorte. Não é tentativa. <strong>É estrutura.</strong></p>
+    <p class="body reveal" style="margin-top:12px;">É o que a gente chama de <strong>Método Demanda Contínua</strong>, cinco etapas que cobrem desde a identificação da demanda até a conversão do lead, sem deixar gap no processo.</p>
+  </div>
+</div>
+
+<div class="btn-wrap reveal">
+  <a href="https://wa.me/5521982955678?text=Quero%20um%20diagn%C3%B3stico%20gratuito%20do%20meu%20marketing%20e%20vendas." target="_blank" class="btn btn-red">Quero um diagnóstico gratuito do meu marketing e vendas</a>
+</div>
+
+<span class="sep"></span>
+
+<!-- ══════════ DIAGNÓSTICO GRATUITO ══════════ -->
+<div class="section section-mid" id="diagnostico">
+  <div class="wrap">
+    <span class="label label-amber reveal">Diagnóstico gratuito</span>
+    <h2 class="h3 reveal" style="color:var(--paper);">Proponho para você um diagnóstico gratuito para entendermos em qual fase você está com problema hoje.</h2>
+    <div class="bullet-row reveal"><span class="bn">01</span><span class="bt">Se o problema foi colocar dinheiro num lugar onde teu público não está</span></div>
+    <div class="bullet-row reveal"><span class="bn">02</span><span class="bt">Se você conversa igual ao seu concorrente — o que não te diferencia e faz o cliente só comparar preço</span></div>
+    <div class="bullet-row reveal"><span class="bn">03</span><span class="bt">Se teu Instagram, Google e site afastam ou atraem clientes</span></div>
+    <div class="bullet-row reveal"><span class="bn">04</span><span class="bt">Se o tráfego tava orientado a lead qualificado ou poluído</span></div>
+    <div class="bullet-row reveal"><span class="bn">05</span><span class="bt">Se na hora de chutar pro gol e fechar a venda, você tem atendido de maneira rápida, com qualidade e orientado a conversão</span></div>
+  </div>
+</div>
+
+<div class="btn-wrap reveal">
+  <a href="https://wa.me/5521982955678?text=Quero%20um%20diagn%C3%B3stico%20gratuito%20do%20meu%20marketing%20e%20vendas." target="_blank" class="btn btn-red">Quero um diagnóstico gratuito do meu marketing e vendas</a>
+</div>
+
+<span class="sep"></span>
+
+<!-- ══════════ NÃO É PRA TODO MUNDO ══════════ -->
+<div class="nao-section" id="nao">
+  <div class="nao-inner">
+    <span class="label label-white reveal">Atenção</span>
+    <h2 class="h2 reveal" style="color:white; margin-bottom:28px;">Esse diagnóstico<br><em style="font-style:italic; color:rgba(255,255,255,.5);">não é pra todo mundo.</em></h2>
+
+    <div class="nao-item reveal">
+      <span class="nao-x">✗</span>
+      <span>Quem quer postar por postar e acha que volume de conteúdo substitui estratégia</span>
+    </div>
+    <div class="nao-item reveal">
+      <span class="nao-x">✗</span>
+      <span>Quem coloca uma campanha no ar e nunca mais aparece pra gravar um anúncio em vídeo</span>
+    </div>
+    <div class="nao-item reveal">
+      <span class="nao-x">✗</span>
+      <span>Quem acha que o lead vai vir de mão beijada, louco pra comprar, sem nenhum esforço do lado comercial</span>
+    </div>
+
+    <p class="nao-stamp reveal">NÃO.</p>
+  </div>
+</div>
+
+<!-- ══════════ É PRA ESSE DIAGNÓSTICO ══════════ -->
+<div class="sim-section">
+  <div class="sim-inner">
+    <span class="label reveal" style="color:rgba(255,255,255,.5);">Mas é pra você se</span>
+    <h2 class="h2 reveal" style="color:white; margin-bottom:28px;">Esse diagnóstico<br><em style="font-style:italic; color:rgba(255,255,255,.7);">é pra quem está pronto.</em></h2>
+
+    <div class="sim-item reveal">
+      <span class="sim-check">✓</span>
+      <span>Você está cansado de agência que só entrega postzinho e nunca fala de resultado real</span>
+    </div>
+    <div class="sim-item reveal">
+      <span class="sim-check">✓</span>
+      <span>Você sente que o dinheiro foi investido, mas ninguém soube te dizer exatamente onde foi parar</span>
+    </div>
+    <div class="sim-item reveal">
+      <span class="sim-check">✓</span>
+      <span>Você já desanimou do tráfego pago, mas sabe no fundo que funciona. Afinal, seu concorrente cresceu com isso. Por que você não?</span>
+    </div>
+  </div>
+</div>
+
+<span class="sep"></span>
+
+<!-- ══════════ QUOTE ══════════ -->
+<div class="quote-block reveal">
+  <div class="quote-inner">
+    <p class="quote-text">"Enquanto você não enxerga onde o problema está,<br>qualquer investimento vira aposta."</p>
+    <p class="quote-line2">E aposta não escala negócio.</p>
+  </div>
+</div>
+
+<!-- ══════════ CTA FINAL ══════════ -->
+<div class="cta-final-section">
+  <div style="max-width:var(--max); margin:0 auto; position:relative; z-index:1;">
+    <span class="label label-white reveal">É exatamente isso que a gente constrói com você</span>
+    <h2 class="h2 reveal" style="color:white;">Um diagnóstico claro.<br>Baseado em dados.<br>Pro seu momento.</h2>
+    <p class="body reveal" style="color:rgba(255,255,255,.85); margin-bottom:28px;">Antes de investir mais em marketing, faz sentido entender onde está o erro.</p>
+    <div class="reveal">
+      <a href="https://wa.me/5521982955678?text=Quero%20um%20diagn%C3%B3stico%20gratuito%20do%20meu%20marketing%20e%20vendas." target="_blank" class="btn btn-white">Quero um diagnóstico gratuito do meu marketing e vendas</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ FECHAMENTO ══════════ -->
+<div class="fechamento">
+  <p class="fecha-body reveal">Porque no final, não é falta de tentativa.</p>
+  <p class="fecha-final reveal">É falta de alinhamento.</p>
+</div>
+
+<script>
+// progress
+const bar = document.getElementById('progress');
+window.addEventListener('scroll', () => {
+  const s = window.scrollY;
+  const t = document.documentElement.scrollHeight - window.innerHeight;
+  bar.style.width = (s / t * 100) + '%';
+});
+
+// reveal + tension meter
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    e.target.classList.add('visible');
+    if (e.target.id === 'tension-meter') {
+      setTimeout(() => {
+        e.target.querySelectorAll('.tm-bar').forEach(b => {
+          b.style.width = b.dataset.w + '%';
+        });
+      }, 300);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+// problema-cards: acende borda vermelha quando no centro da tela
+const cardObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('active');
+    } else {
+      e.target.classList.remove('active');
+    }
+  });
+}, {
+  threshold: 0.5,
+  rootMargin: '-20% 0px -20% 0px'   // só dispara quando card está no centro ~60% da viewport
+});
+
+document.querySelectorAll('.problema-card').forEach(el => cardObs.observe(el));
+</script>
+</body>
+</html>
